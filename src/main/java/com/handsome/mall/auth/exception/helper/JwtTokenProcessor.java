@@ -26,21 +26,18 @@ public class JwtTokenProcessor {
     JwtTokenProcessor.accessKeyLifeTime = accessKeyLifeTime;
   }
 
-
   public void validateAccessToken(String token) throws AuthException {
     JwtUtil.isTokenValid(token, accessKey);
   }
 
+  public String createAccessToken(String subject, Map<String, Object> claimsList) {
 
-  private String createAccessTokenWithClaims(String subject, Map<String, Object> claimsList) {
+    if (claimsList == null) {
+      return JwtUtil.generateToken(subject, accessKey, accessKeyLifeTime);
+    }
     return JwtUtil.generateTokenWithClaims(subject, accessKey,
         accessKeyLifeTime, claimsList);
   }
-
-  public String createAccessToken(String subject, Map<String, Object> claimsList) {
-
-      return createAccessTokenWithClaims(subject, claimsList);
-    }
   }
 
 

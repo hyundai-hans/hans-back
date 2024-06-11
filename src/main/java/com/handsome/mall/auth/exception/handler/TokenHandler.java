@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 public class TokenHandler {
 
   private final JwtTokenProcessor jwtTokenProcessor;
-  private final InvalidateTokenStrategy invalidateAccessToken;
+  private final InvalidateTokenStrategy<Object> invalidateAccessToken;
+
 
   public String createToken(String id,
       Map<String, Object> claimList) {
