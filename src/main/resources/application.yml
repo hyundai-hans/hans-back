@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: hyundai-handsome-mall
+
+
+
+encrypt:
+  key:
+    access: handsome1teamhandsome1teamhandsome1teamhandsome1team
+    life-time: 300000
