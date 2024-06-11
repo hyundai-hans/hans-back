@@ -1,8 +1,8 @@
 package com.handsome.mall.auth.http.filter;
 
 import com.handsome.mall.auth.exception.AuthException;
-import com.handsome.mall.auth.exception.helper.JwtTokenProcessor;
-import com.handsome.mall.auth.exception.util.ExtractStringByRequest;
+import com.handsome.mall.auth.helper.JwtTokenProcessor;
+import com.handsome.mall.auth.util.ExtractStringByRequest;
 import com.handsome.mall.auth.valueobject.JWTAuthenticationShouldNotFilterAntMatcher;
 import io.jsonwebtoken.ExpiredJwtException;
 import java.io.IOException;

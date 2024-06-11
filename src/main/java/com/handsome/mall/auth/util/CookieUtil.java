@@ -1,4 +1,4 @@
-package com.handsome.mall.auth.exception.util;
+package com.handsome.mall.auth.util;
 
 import java.time.Duration;
 import java.util.Arrays;

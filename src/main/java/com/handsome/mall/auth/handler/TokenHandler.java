@@ -1,9 +1,8 @@
-package com.handsome.mall.auth.exception.handler;
+package com.handsome.mall.auth.handler;
 
-import com.handsome.mall.auth.exception.helper.JwtTokenProcessor;
+import com.handsome.mall.auth.helper.JwtTokenProcessor;
 import com.handsome.mall.auth.service.InvalidateTokenStrategy;
 import java.util.Map;
-import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

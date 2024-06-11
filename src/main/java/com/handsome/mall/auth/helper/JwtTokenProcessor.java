@@ -1,7 +1,7 @@
-package com.handsome.mall.auth.exception.helper;
+package com.handsome.mall.auth.helper;
 
 import com.handsome.mall.auth.exception.AuthException;
-import com.handsome.mall.auth.exception.util.JwtUtil;
+import com.handsome.mall.auth.util.JwtUtil;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

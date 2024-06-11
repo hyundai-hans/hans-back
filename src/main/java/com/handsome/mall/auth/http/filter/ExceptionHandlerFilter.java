@@ -1,11 +1,8 @@
 package com.handsome.mall.auth.http.filter;
 
-import com.bit.lot.flower.auth.common.dto.AccessTokenExpiredResponse;
-import com.bit.lot.flower.auth.common.exception.ErrorDTO;
-import com.bit.lot.flower.auth.common.util.JsonBinderUtil;
-import com.bit.lot.flower.auth.common.valueobject.AuthId;
-import com.bit.lot.flower.auth.common.valueobject.Role;
-import com.bit.lot.flower.auth.common.valueobject.SecurityPolicyStaticValue;
+
+import com.handsome.mall.auth.util.JsonBinderUtil;
+import com.handsome.mall.exception.ErrorDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -26,7 +23,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
     try {
       filterChain.doFilter(request, response);
     } catch (ExpiredJwtException e) {
-      JsonBinderUtil.setResponseWithJson(response, 403, createDtoByToken(e));
+      JsonBinderUtil.setResponseWithJson(response, 401,"로그인 시간이 만료되었습니다. 다시 로그인 해주세요.");
     }
     catch (RuntimeException e) {
       ErrorDTO dto = new ErrorDTO(String.valueOf(401), e.getMessage());
@@ -34,11 +31,6 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
     }
   }
 
-    private AccessTokenExpiredResponse<AuthId> createDtoByToken (ExpiredJwtException e){
-      return AccessTokenExpiredResponse.<AuthId>builder()
-          .id(new AuthId(Long.valueOf(e.getClaims().getSubject())))
-          .role(Role.valueOf(e.getClaims().get(
-              SecurityPolicyStaticValue.CLAIMS_ROLE_KEY_NAME, String.class))).build();
-    }
+
   }
 

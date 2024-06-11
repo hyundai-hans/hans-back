@@ -1,4 +1,4 @@
-package com.handsome.mall.auth.exception.handler;
+package com.handsome.mall.auth.handler;
 
 
 import java.io.IOException;
