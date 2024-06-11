@@ -3,6 +3,6 @@ package com.handsome.mall.auth.service;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface InvalidateTokenStrategy {
-  public void invalidate(String key, String value);
+public interface InvalidateTokenStrategy<T extends Object> {
+  public void invalidate(T key, String value);
 }
