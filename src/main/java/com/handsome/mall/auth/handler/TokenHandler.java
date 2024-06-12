@@ -1,7 +1,7 @@
 package com.handsome.mall.auth.handler;
 
 import com.handsome.mall.auth.helper.JwtTokenProcessor;
-import com.handsome.mall.auth.service.InvalidateTokenStrategy;
+import com.handsome.mall.auth.valueobject.JwtType;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,17 +11,19 @@ import org.springframework.stereotype.Component;
 public class TokenHandler {
 
   private final JwtTokenProcessor jwtTokenProcessor;
-  private final InvalidateTokenStrategy<Object> invalidateAccessToken;
-
 
   public String createToken(String id,
       Map<String, Object> claimList) {
     return jwtTokenProcessor.createAccessToken(id, claimList);
 
   }
+  public void invalidateToken(JwtType type, String value){
+     jwtTokenProcessor.invalidateToken(type, value);
 
-  public void invalidateToken(String key, String token) {
-    invalidateAccessToken.invalidate(key, token);
+  }
+
+  public boolean isValidToken(JwtType type, String value){
+    return jwtTokenProcessor.isValidToken(type, value);
   }
 
 
