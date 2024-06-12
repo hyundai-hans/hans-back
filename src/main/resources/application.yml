@@ -2,9 +2,20 @@ spring:
   application:
     name: hyundai-handsome-mall
 
+  datasource:
+    primary:
+      driver-class-name: oracle.jdbc.OracleDriver
+      username: ${DATABASE_USER_NAME}
+      password: ${DATABASE_USER_PASSWORD}
+      url: ${DATABSE_PRIMARY_URL}
 
+    history:
+      driver-class-name: oracle.jdbc.OracleDriver
+      username: ${DATABASE_USER_NAME}
+      password: ${DATABASE_USER_PASSWORD}
+      url: ${DATABSE_SECONDARY_URL}
 
 encrypt:
   key:
-    access: handsome1teamhandsome1teamhandsome1teamhandsome1team
-    life-time: 300000
+    access: ${ACCESS_SECRET}
+    life-time: ${ACCESS_LIFETIME}

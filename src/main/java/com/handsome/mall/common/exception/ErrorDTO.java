@@ -1,4 +1,4 @@
-package com.handsome.mall.exception;
+package com.handsome.mall.common.exception;
 
 
 import lombok.Builder;

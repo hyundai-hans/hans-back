@@ -24,23 +24,33 @@ repositories {
 }
 
 dependencies {
+
+    //spring
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.session:spring-session-jdbc'
-    compileOnly 'org.projectlombok:lombok'
-    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
     testImplementation 'org.springframework.security:spring-security-test'
+
+    //lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    //oracle-jdbc
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+
+    //test
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    //jwt
+    //dependency
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+
 
 }
 
