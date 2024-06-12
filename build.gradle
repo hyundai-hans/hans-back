@@ -27,11 +27,9 @@ dependencies {
 
     //spring
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.session:spring-session-jdbc'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.2'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -43,8 +41,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
 
     //oracle-jdbc
-    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
-
+    implementation 'com.oracle.database.jdbc:ojdbc8:19.3.0.0'
     //test
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
