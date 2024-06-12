@@ -38,6 +38,7 @@ public class JwtTokenProcessor {
     throw new AuthException("존재하지 않는 JWT 토큰 타입입니다.");
   }
 
+
   public void invalidateToken(JwtType type, String token) {
     if(type.equals(JwtType.access)) tokenInvalidationStrategy.invalidate(token);
     throw new AuthException("존재하지 않는 JWT 토큰 타입입니다.");

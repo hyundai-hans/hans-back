@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
       tokenHandler.isValidToken(JwtType.access,token);
     } catch (ExpiredJwtException expiredJwtException) {
       response.setStatus(401);
-      throw new ExpiredJwtException(expiredJwtException.getHeader(), expiredJwtException.getClaims(), "Expired");
+      throw new ExpiredJwtException(expiredJwtException.getHeader(), expiredJwtException.getClaims(), "로그인 시간이 만료되었습니다.");
     } catch  (AuthException authException) {
       throw new AuthException(authException.getMessage());
     }
