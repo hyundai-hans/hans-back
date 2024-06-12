@@ -2,7 +2,7 @@ package com.handsome.mall.auth.http.filter;
 
 
 import com.handsome.mall.auth.util.JsonBinderUtil;
-import com.handsome.mall.exception.ErrorDTO;
+import com.handsome.mall.common.exception.ErrorDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import java.io.IOException;
 import javax.servlet.FilterChain;
