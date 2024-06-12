@@ -38,5 +38,5 @@ out/
 .vscode/
 
 ### yml
-**/resource/application-database.yml
-**/resource/application-jwt.yml
+**/resources/application-database.yml
+**/resources/application-jwt.yml
