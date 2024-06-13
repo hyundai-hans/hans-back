@@ -15,7 +15,8 @@ public class DataSourceConfig {
   @Bean(name = "primaryDataSource")
   @ConfigurationProperties(prefix = "spring.datasource.primary")
   public DataSource primaryDataSource() {
-    return DataSourceBuilder.create().build();
+    DataSource dataSource = DataSourceBuilder.create().build();
+    return dataSource;
   }
 
   @Bean(name = "historyDataSource")
