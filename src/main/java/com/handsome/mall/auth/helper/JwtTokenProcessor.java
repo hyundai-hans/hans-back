@@ -6,30 +6,19 @@ import com.handsome.mall.auth.util.JwtUtil;
 import com.handsome.mall.auth.valueobject.JwtType;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 
-@RequiredArgsConstructor
-@Component
+@AllArgsConstructor
 public class JwtTokenProcessor {
 
+  public String accessKey;
+  public long accessKeyLifeTime;
+  private TokenInvalidationStrategy tokenInvalidationStrategy;
 
-  private final TokenInvalidationStrategy tokenInvalidationStrategy;
-  public static String accessKey;
-  public static long accessKeyLifeTime;
-
-
-  @Value("${encrypt.key.access}")
-  private void setAccessKey(String accessKey) {
-    JwtTokenProcessor.accessKey = accessKey;
-  }
-
-  @Value("${encrypt.key.life-time}")
-  private void setAccessKeyLifeTime(long accessKeyLifeTime) {
-    JwtTokenProcessor.accessKeyLifeTime = accessKeyLifeTime;
-  }
 
   public boolean isValidToken(JwtType keyType, String token) {
     if (keyType.equals(JwtType.access)) {
