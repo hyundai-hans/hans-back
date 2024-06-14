@@ -22,6 +22,9 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+    @Column(name = "member_email", length = 10)
+    private String email;
+
     @Column(name = "member_nickname", length = 10)
     private String nickname;
 

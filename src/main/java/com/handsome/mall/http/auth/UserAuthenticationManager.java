@@ -1,5 +1,6 @@
 package com.handsome.mall.http.auth;
 
+import com.handsome.mall.entity.Member;
 import com.handsome.mall.exception.AuthException;
 import com.handsome.mall.member.entity.Member;
 import com.handsome.mall.member.repository.UserRepository;
@@ -29,7 +30,7 @@ public class UserAuthenticationManager implements AuthenticationManager {
     String email = authentication.getPrincipal().toString();
     String password = authentication.getCredentials().toString();
 
-    Member member = memberRepository.findByMemberByEmailAndPassword(email, password)
+    Member member = memberRepository.findBy(email, password)
         .orElseThrow(() -> {
           throw new AuthException("존재하지 않은 이메일과 패스워드입니다.");
         });
