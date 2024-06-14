@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tag")
+@Table(name = "producta_tag")
 public class ProductTag {
 
     @Id

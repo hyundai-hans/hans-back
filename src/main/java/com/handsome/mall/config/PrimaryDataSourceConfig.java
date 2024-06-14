@@ -1,8 +1,13 @@
 package com.handsome.mall.config;
 
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -14,6 +19,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
@@ -23,6 +29,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 )
 public class PrimaryDataSourceConfig {
 
+
     @Bean(name = "primaryDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.primary")
     public DataSource primaryDataSource() {
@@ -30,12 +37,16 @@ public class PrimaryDataSourceConfig {
     }
 
     @Bean(name = "primaryEntityManagerFactory")
+
     public LocalContainerEntityManagerFactoryBean primaryEntityManagerFactory(
         EntityManagerFactoryBuilder builder,
         @Qualifier("primaryDataSource") DataSource dataSource) {
+
         return builder
             .dataSource(dataSource)
+            .packages("com.handsome.mall.entity")
             .packages("com.handsome.mall.entity.primary")
+            .properties(getProperties())
             .persistenceUnit("primary")
             .build();
     }
@@ -44,5 +55,12 @@ public class PrimaryDataSourceConfig {
     public PlatformTransactionManager primaryTransactionManager(
         @Qualifier("primaryEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
+    }
+
+    private Map<String, Object> getProperties() {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.show_sql", "true");
+        return properties;
     }
 }
