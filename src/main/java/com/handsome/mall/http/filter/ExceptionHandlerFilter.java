@@ -1,8 +1,8 @@
 package com.handsome.mall.http.filter;
 
 
+import com.handsome.mall.exception.ErrorDTO;
 import com.handsome.mall.util.JsonBinderUtil;
-import com.handsome.mall.common.exception.ErrorDTO;
 import io.jsonwebtoken.ExpiredJwtException;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-@Component
 @Slf4j
 public class ExceptionHandlerFilter extends OncePerRequestFilter {
 

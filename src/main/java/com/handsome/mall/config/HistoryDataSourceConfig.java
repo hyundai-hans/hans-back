@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    basePackages = "com.handsome.mall.repository.history",  // History datasource repositories
+    basePackages = "com.handsome.mall.repository.history",
     entityManagerFactoryRef = "historyEntityManagerFactory",
     transactionManagerRef = "historyTransactionManager"
 )
@@ -35,7 +35,7 @@ public class HistoryDataSourceConfig {
         @Qualifier("historyDataSource") DataSource dataSource) {
         return builder
             .dataSource(dataSource)
-            .packages("com.handsome.mall.entity.history")  // History datasource entities
+            .packages("com.handsome.mall.entity.history")
             .persistenceUnit("history")
             .build();
     }

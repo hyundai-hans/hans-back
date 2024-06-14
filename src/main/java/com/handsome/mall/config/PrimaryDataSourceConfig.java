@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-    basePackages = "com.handsome.mall.repository",
+    basePackages = "com.handsome.mall.repository.primary",
     entityManagerFactoryRef = "primaryEntityManagerFactory",
     transactionManagerRef = "primaryTransactionManager"
 )
@@ -35,7 +35,7 @@ public class PrimaryDataSourceConfig {
         @Qualifier("primaryDataSource") DataSource dataSource) {
         return builder
             .dataSource(dataSource)
-            .packages("com.handsome.mall.entity")
+            .packages("com.handsome.mall.entity.primary")
             .persistenceUnit("primary")
             .build();
     }

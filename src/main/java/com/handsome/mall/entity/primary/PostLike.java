@@ -1,6 +1,8 @@
-package com.handsome.mall.entity;
+package com.handsome.mall.entity.primary;
 
+import com.handsome.mall.entity.id.PostLikeId;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,15 +19,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "post_like")
 public class PostLike {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
-    private Long postId;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    private Long memberId;
+    @EmbeddedId
+    private PostLikeId id;
 
     @Column(name = "post_is_liked")
     private Boolean isLiked;

@@ -1,6 +1,8 @@
 package com.handsome.mall.entity.history;
 
+import com.handsome.mall.entity.id.ViewHistoryId;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,15 +19,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "view_history")
 public class ViewHistory {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    private Long memberId;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id")
-    private Long productId;
+    @EmbeddedId
+    private ViewHistoryId viewHistoryId;
 
     @Column(name = "view_history_count")
     private Long viewCount;

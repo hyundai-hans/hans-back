@@ -1,9 +1,9 @@
 package com.handsome.mall.http.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.handsome.mall.dto.UserLoginDto;
 import com.handsome.mall.exception.AuthException;
-import com.handsome.mall.member.dto.UserLoginDto;
-import com.handsome.mall.member.valueobject.Role;
+import com.handsome.mall.valueobject.Role;
 import java.io.IOException;
 import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
@@ -53,17 +53,6 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
     }
 
   }
-
-//  @Override
-//  public void successfulAuthentication(HttpServletRequest request, HttpServletResponse
-//      response, FilterChain
-//      chain,
-//      Authentication authResult) throws IOException, ServletException {
-//    SecurityContext context = SecurityContextHolder.createEmptyContext();
-//    context.setAuthentication(authResult);
-//    SecurityContextHolder.setContext(context);
-//    successHandler.onAuthenticationSuccess(request, response, chain, authResult);
-//  }
 
 
 }

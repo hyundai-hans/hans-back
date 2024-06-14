@@ -1,6 +1,6 @@
-package com.handsome.mall.repository;
+package com.handsome.mall.repository.primary;
 
-import com.handsome.mall.entity.ProductTag;
+import com.handsome.mall.entity.primary.ProductTag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.handsome.mall.entity;
+package com.handsome.mall.entity.primary;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,24 +14,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "post_img")
-public class PostImg {
+@Table(name = "product")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_img_id")
+    @Column(name = "product_id")
     private Long id;
 
-    @Column(name = "post_id")
-    private Long postId;
+    @Column(name = "product_name", length = 50)
+    private String name;
 
-    @Column(name = "member_id")
-    private Long memberId;
+    @Column(name = "product_price")
+    private Long price;
 
-    @Column(name = "post_img_url", length = 255)
+    @Column(name = "product_img_url", length = 255)
     private String imgUrl;
 
-    @Column(name = "is_thumbnail")
-    private Boolean isThumbnail;
+    @Column(name = "product_url", length = 255)
+    private String url;
 
+    // Getters and Setters
 }

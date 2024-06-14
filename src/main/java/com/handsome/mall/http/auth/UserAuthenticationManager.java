@@ -1,10 +1,8 @@
 package com.handsome.mall.http.auth;
 
-import com.handsome.mall.entity.Member;
+import com.handsome.mall.entity.primary.Member;
 import com.handsome.mall.exception.AuthException;
-import com.handsome.mall.member.entity.Member;
-import com.handsome.mall.member.repository.UserRepository;
-import com.handsome.mall.repository.MemberRepository;
+import com.handsome.mall.repository.primary.MemberRepository;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +28,7 @@ public class UserAuthenticationManager implements AuthenticationManager {
     String email = authentication.getPrincipal().toString();
     String password = authentication.getCredentials().toString();
 
-    Member member = memberRepository.findBy(email, password)
+    Member member = memberRepository.findByEmailAndPassword(email, password)
         .orElseThrow(() -> {
           throw new AuthException("존재하지 않은 이메일과 패스워드입니다.");
         });

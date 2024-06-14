@@ -1,4 +1,4 @@
-package com.handsome.mall.entity;
+package com.handsome.mall.entity.primary;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;
