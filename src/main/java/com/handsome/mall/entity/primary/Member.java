@@ -1,4 +1,4 @@
-package com.handsome.mall.entity;
+package com.handsome.mall.entity.primary;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

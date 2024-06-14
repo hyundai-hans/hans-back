@@ -1,8 +1,8 @@
 package com.handsome.mall.http.auth;
 
-import com.handsome.mall.entity.Member;
+import com.handsome.mall.entity.primary.Member;
 import com.handsome.mall.exception.AuthException;
-import com.handsome.mall.repository.MemberRepository;
+import com.handsome.mall.repository.primary.MemberRepository;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

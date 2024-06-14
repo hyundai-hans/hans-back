@@ -1,4 +1,4 @@
-package com.handsome.mall.entity;
+package com.handsome.mall.entity.primary;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,19 +14,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tag")
-public class ProductTag {
+@Table(name = "post_tag")
+public class PostTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tag_id")
+    @Column(name = "post_tag_id")
     private Long id;
 
-    @Column(name = "tag_product_id")
-    private Long productId;
+    @Column(name = "member_id")
+    private Long memberId;
 
-    @Column(name = "tag_product_body", length = 50)
+    @Column(name = "post_tag_body", length = 255)
     private String body;
 
-
+    // Getters and Setters
 }

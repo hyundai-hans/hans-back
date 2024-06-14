@@ -1,6 +1,6 @@
-package com.handsome.mall.repository;
+package com.handsome.mall.repository.primary;
 
-import com.handsome.mall.entity.PostImg;
+import com.handsome.mall.entity.primary.PostImg;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

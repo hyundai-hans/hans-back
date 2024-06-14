@@ -3,7 +3,7 @@ package com.handsome.mall.config;
 import com.handsome.mall.handler.SystemAuthenticationSuccessHandler;
 import com.handsome.mall.handler.TokenHandler;
 import com.handsome.mall.http.auth.UserAuthenticationManager;
-import com.handsome.mall.repository.MemberRepository;
+import com.handsome.mall.repository.primary.MemberRepository;
 import com.handsome.mall.service.JwtTokenProcessor;
 import com.handsome.mall.http.filter.ExceptionHandlerFilter;
 import com.handsome.mall.http.filter.JwtAuthenticationFilter;
@@ -40,7 +40,6 @@ public class SecurityConfig {
   @Bean
   public ExceptionHandlerFilter exceptionHandlerFilter() {
     return new ExceptionHandlerFilter();
-
   }
 
 
