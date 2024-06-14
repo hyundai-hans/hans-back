@@ -1,15 +1,16 @@
 package com.handsome.mall.auth.service;
 
 import javax.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@Service
-@RequiredArgsConstructor
+
+@AllArgsConstructor
 public class RegisterTokenInvalidationAsBlackListAtSession implements
     TokenInvalidationStrategy {
 
-    private final HttpSession httpSession;
+    private  HttpSession httpSession;
 
 
   @Override

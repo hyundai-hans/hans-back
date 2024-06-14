@@ -17,7 +17,6 @@ public class SystemAuthenticationSuccessHandler implements AuthenticationSuccess
 
   private final TokenHandler tokenHandler;
 
-
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       FilterChain chain, Authentication authentication) throws IOException, ServletException {

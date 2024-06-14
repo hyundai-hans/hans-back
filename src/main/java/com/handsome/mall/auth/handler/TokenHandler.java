@@ -3,14 +3,16 @@ package com.handsome.mall.auth.handler;
 import com.handsome.mall.auth.helper.JwtTokenProcessor;
 import com.handsome.mall.auth.valueobject.JwtType;
 import java.util.Map;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
-@Component
+
+@AllArgsConstructor
 public class TokenHandler {
 
-  private final JwtTokenProcessor jwtTokenProcessor;
+  private JwtTokenProcessor jwtTokenProcessor;
+
 
   public String createToken(String id,
       Map<String, Object> claimList) {
