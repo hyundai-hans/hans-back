@@ -20,15 +20,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-  private SystemAuthenticationSuccessHandler successHandler;
+  private AuthenticationSuccessHandler successHandler;
   private AuthenticationManager authenticationManager;
 
   public UserAuthenticationFilter(
-      SystemAuthenticationSuccessHandler successHandler,
+      AuthenticationSuccessHandler successHandler,
       AuthenticationManager authenticationManager) {
     super(authenticationManager);
     this.successHandler = successHandler;
@@ -59,16 +60,16 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 
   }
 
-  @Override
-  public void successfulAuthentication(HttpServletRequest request, HttpServletResponse
-      response, FilterChain
-      chain,
-      Authentication authResult) throws IOException, ServletException {
-    SecurityContext context = SecurityContextHolder.createEmptyContext();
-    context.setAuthentication(authResult);
-    SecurityContextHolder.setContext(context);
-    successHandler.onAuthenticationSuccess(request, response, chain, authResult);
-  }
+//  @Override
+//  public void successfulAuthentication(HttpServletRequest request, HttpServletResponse
+//      response, FilterChain
+//      chain,
+//      Authentication authResult) throws IOException, ServletException {
+//    SecurityContext context = SecurityContextHolder.createEmptyContext();
+//    context.setAuthentication(authResult);
+//    SecurityContextHolder.setContext(context);
+//    successHandler.onAuthenticationSuccess(request, response, chain, authResult);
+//  }
 
 
 }
