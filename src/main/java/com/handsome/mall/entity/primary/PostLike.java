@@ -12,17 +12,26 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
 @Entity
 @Table(name = "post_like")
+@NoArgsConstructor
+@Getter
 public class PostLike {
 
-    @EmbeddedId
-    private PostLikeId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_like_id")
+    private Long id;
 
-    @Column(name = "post_is_liked")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
+
+    @Column(name = "post_is_liked", nullable = false)
     private Boolean isLiked;
-
 }

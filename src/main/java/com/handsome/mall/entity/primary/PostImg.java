@@ -10,11 +10,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
 @Entity
 @Table(name = "post_img")
+@NoArgsConstructor
+@Getter
 public class PostImg {
 
     @Id
@@ -22,16 +26,13 @@ public class PostImg {
     @Column(name = "post_img_id")
     private Long id;
 
-    @Column(name = "post_id")
-    private Long postId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
 
-    @Column(name = "member_id")
-    private Long memberId;
-
-    @Column(name = "post_img_url", length = 255)
+    @Column(name = "post_img_url", length = 255, nullable = false)
     private String imgUrl;
 
-    @Column(name = "is_thumbnail")
+    @Column(name = "is_thumbnail", nullable = false)
     private Boolean isThumbnail;
-
 }

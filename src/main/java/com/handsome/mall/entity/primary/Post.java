@@ -13,11 +13,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.List;
+
 @Entity
 @Table(name = "post")
+@NoArgsConstructor
+@Getter
 public class Post {
 
     @Id
@@ -25,21 +31,25 @@ public class Post {
     @Column(name = "post_id")
     private Long id;
 
-    @Column(name = "member_id")
-    private Long memberId;
-
-    @Column(name = "post_body", length = 255)
-    private String body;
-
-    @Column(name = "post_title", length = 50)
-    private String title;
-
-    @Column(name = "post_reg_date")
-    private LocalDateTime regDate;
-
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
+    @Column(name = "post_body", length = 255, nullable = false)
+    private String body;
 
+    @Column(name = "post_title", length = 50, nullable = false)
+    private String title;
+
+    @Column(name = "post_reg_date", nullable = false)
+    private Timestamp regDate;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PostImg> postImages;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PostTag> postTags;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<PostLike> postLikes;
 }

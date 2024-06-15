@@ -1,5 +1,6 @@
 package com.handsome.mall.entity.primary;
 
+import com.handsome.mall.entity.history.ViewHistory;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +11,16 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.List;
+
 @Entity
 @Table(name = "product")
+@NoArgsConstructor
+@Getter
 public class Product {
 
     @Id
@@ -22,17 +28,21 @@ public class Product {
     @Column(name = "product_id")
     private Long id;
 
-    @Column(name = "product_name", length = 50)
+    @Column(name = "product_name", length = 50, nullable = false)
     private String name;
 
-    @Column(name = "product_price")
-    private Long price;
+    @Column(name = "product_price", nullable = false)
+    private Integer price;
 
-    @Column(name = "product_img_url", length = 255)
+    @Column(name = "product_img_url", length = 255, nullable = false)
     private String imgUrl;
 
-    @Column(name = "product_url", length = 255)
-    private String url;
+    @Column(name = "product_uri", length = 255, nullable = false)
+    private String uri;
 
-    // Getters and Setters
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ProductTag> productTags;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ViewHistory> viewHistories;
 }

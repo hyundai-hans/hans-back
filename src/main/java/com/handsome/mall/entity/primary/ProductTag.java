@@ -10,11 +10,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
 @Entity
-@Table(name = "producta_tag")
+@Table(name = "product_tag")
+@NoArgsConstructor
+@Getter
 public class ProductTag {
 
     @Id
@@ -22,11 +26,10 @@ public class ProductTag {
     @Column(name = "tag_id")
     private Long id;
 
-    @Column(name = "tag_product_id")
-    private Long productId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tag_product_id", nullable = false)
+    private Product product;
 
-    @Column(name = "tag_product_body", length = 50)
-    private String body;
-
-
+    @Column(name = "tag_product_body", length = 50, nullable = false)
+    private String tagBody;
 }
