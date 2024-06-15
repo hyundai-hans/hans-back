@@ -40,12 +40,18 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(AuthException.class)
-  public ResponseEntity<Map<String, List<String>>> illegalArgumentException(
+  public ResponseEntity<Map<String, List<String>>> authException(
       AuthException ex) {
     List<String> errors = Collections.singletonList(ex.getMessage());
     return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
   }
 
+  @ExceptionHandler(UserException.class)
+  public ResponseEntity<Map<String, List<String>>> userException(
+      UserException ex) {
+    List<String> errors = Collections.singletonList(ex.getMessage());
+    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+  }
 
 
   @ExceptionHandler(Exception.class)

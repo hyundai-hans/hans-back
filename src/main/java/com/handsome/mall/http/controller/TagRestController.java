@@ -1,8 +1,8 @@
-package com.handsome.mall.controller;
+package com.handsome.mall.http.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class PostRestController {
+public class TagRestController {
 
 }

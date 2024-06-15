@@ -1,6 +1,7 @@
 package com.handsome.mall.handler;
 
 
+import com.handsome.mall.valueobject.AuthRequestHeaderPrefix;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,7 +33,7 @@ public class SystemAuthenticationSuccessHandler implements AuthenticationSuccess
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) {
     String token = tokenHandler.createToken(authentication.getName(),null);
-    response.setHeader("Authorization","Bearer "+token );
+    response.setHeader(AuthRequestHeaderPrefix.AUTHORIZATION_HEADER,AuthRequestHeaderPrefix.TOKEN_PREFIX+token );
   }
 
 }

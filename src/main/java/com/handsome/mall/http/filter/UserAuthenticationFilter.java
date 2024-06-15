@@ -1,7 +1,7 @@
 package com.handsome.mall.http.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.handsome.mall.dto.UserLoginDto;
+import com.handsome.mall.dto.UserSystemLoginDto;
 import com.handsome.mall.exception.AuthException;
 import com.handsome.mall.valueobject.Role;
 import java.io.IOException;
@@ -30,11 +30,11 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
     this.authenticationManager = authenticationManager;
   }
 
-  private UserLoginDto getLoginDtoFromRequest(HttpServletRequest request)
+  private UserSystemLoginDto getLoginDtoFromRequest(HttpServletRequest request)
       throws IOException {
     ObjectMapper mapper = new ObjectMapper();
     return mapper.readValue(request.getInputStream(),
-        UserLoginDto.class);
+        UserSystemLoginDto.class);
   }
 
 
@@ -43,7 +43,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
       HttpServletResponse response)
       throws AuthenticationException {
     try {
-      UserLoginDto dto = getLoginDtoFromRequest(request);
+      UserSystemLoginDto dto = getLoginDtoFromRequest(request);
       return authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword(),
               Collections.singleton(new SimpleGrantedAuthority(Role.USER.name()))));
