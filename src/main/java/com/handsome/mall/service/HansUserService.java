@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 
 @RequiredArgsConstructor
@@ -22,10 +21,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class HansUserService implements UserService<Long> {
 
   private final MemberRepository memberRepository;
+  private final UserDuplicationChecker userDuplicationChecker;
+
 
   @Override
   public void signUp(UserSignUpDto signUpDto) {
     Member member = UserMapper.INSTANCE.toMember(signUpDto);
+    userDuplicationChecker.emailDuplicationChecker(signUpDto.getEmail());
+    userDuplicationChecker.nickNameDuplicationChecker(signUpDto.getNickname());
     memberRepository.save(member);
   }
 
@@ -47,7 +50,7 @@ public class HansUserService implements UserService<Long> {
   public UserInfoResponse getInfo(Long userId) {
 
     Member member = getMember(userId);
-    List<PostDto> postDtoList = member.getPostList().stream()
+    List<PostDto> postDtoList = member.getPosts().stream()
                 .map(PostMapper.INSTANCE::toPostDto)
                 .collect(Collectors.toList());
     return new UserInfoResponse(member.getProfileImg(), member.getNickname(), member.getEmail(), postDtoList);

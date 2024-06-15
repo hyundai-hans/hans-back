@@ -21,15 +21,7 @@ public class ViewHistory {
 
     @EmbeddedId
     private ViewHistoryId id;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("memberId")
-    private Member member;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("productId")
-    private Product product;
-
+    
     @Column(name = "view_history_count", nullable = false)
     private Long viewHistoryCount;
 

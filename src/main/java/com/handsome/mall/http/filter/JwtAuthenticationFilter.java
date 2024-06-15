@@ -65,7 +65,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   private boolean shouldNotFilterBySystemPolicy(HttpServletRequest request) {
     String requestURI = request.getRequestURI();
-    return requestURI.contains(JWTAuthenticationShouldNotFilter.SIGNUP_ANT)
+    return requestURI.contains(JWTAuthenticationShouldNotFilter.SIGNUP_ANT) && request.getMethod().equals(HttpMethod.POST.name())
         || requestURI.contains(JWTAuthenticationShouldNotFilter.LOGIN_ANT);
   }
 
