@@ -16,11 +16,11 @@ public class UserDuplicationChecker {
   private final MemberRepository memberRepository;
 
   public void nickNameDuplicationChecker(String nickname){
-    if(memberRepository.findByEmail(nickname).isPresent()) throw new UserException("이미 존재하는 닉네임입니다.");
+    if(memberRepository.findByNickname(nickname).isPresent()) throw new UserException("이미 존재하는 닉네임입니다.");
   }
 
    public void emailDuplicationChecker(String email){
-    if(memberRepository.findByNickname(email).isPresent()) throw new UserException("이미 존재하는 이메일입니다.");
+    if(memberRepository.findByEmail(email).isPresent()) throw new UserException("이미 존재하는 이메일입니다.");
 
   }
 

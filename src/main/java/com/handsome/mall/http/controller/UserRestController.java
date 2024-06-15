@@ -1,6 +1,5 @@
 package com.handsome.mall.http.controller;
 
-import com.handsome.mall.dto.response.LoginSuccessResponse;
 import com.handsome.mall.dto.UserSignUpDto;
 import com.handsome.mall.dto.UserUpdateDto;
 import com.handsome.mall.http.message.SuccessResponse;
@@ -36,12 +35,8 @@ public class UserRestController<ID> {
   }
 
   @PostMapping("/login")
-  public ResponseEntity<SuccessResponse<LoginSuccessResponse>> login(
-      @AuthenticationPrincipal ID userId) {
-    LoginSuccessResponse loginSuccessDto = userService.login(userId);
-    return ResponseEntity.ok(SuccessResponse.<LoginSuccessResponse>builder().data(loginSuccessDto)
-        .status(HttpStatus.OK.toString())
-        .message("로그인 성공").build());
+  public ResponseEntity<String> login() {
+    return ResponseEntity.ok("로그인 성공");
   }
 
   @PostMapping("/logout")

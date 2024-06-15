@@ -22,7 +22,6 @@ public class SystemAuthenticationSuccessHandler implements AuthenticationSuccess
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       FilterChain chain, Authentication authentication) throws IOException, ServletException {
     onAuthenticationSuccess(request, response, authentication);
-    chain.doFilter(request,response);
   }
 
   /**
@@ -34,6 +33,8 @@ public class SystemAuthenticationSuccessHandler implements AuthenticationSuccess
       Authentication authentication) {
     String token = tokenHandler.createToken(authentication.getName(),null);
     response.setHeader(AuthRequestHeaderPrefix.AUTHORIZATION_HEADER,AuthRequestHeaderPrefix.TOKEN_PREFIX+token );
+
+
   }
 
 }

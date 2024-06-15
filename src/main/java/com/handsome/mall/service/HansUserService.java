@@ -13,6 +13,8 @@ import com.handsome.mall.repository.primary.MemberRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -22,15 +24,17 @@ public class HansUserService implements UserService<Long> {
 
   private final MemberRepository memberRepository;
   private final UserDuplicationChecker userDuplicationChecker;
-
+  private final PasswordEncoder encoder;
 
   @Override
   public void signUp(UserSignUpDto signUpDto) {
-    Member member = UserMapper.INSTANCE.toMember(signUpDto);
+    String encodedPassword = encoder.encode(signUpDto.getPassword());
+    Member member = UserMapper.INSTANCE.toMember(signUpDto, encodedPassword);
     userDuplicationChecker.emailDuplicationChecker(signUpDto.getEmail());
     userDuplicationChecker.nickNameDuplicationChecker(signUpDto.getNickname());
     memberRepository.save(member);
   }
+
 
   @Override
   public LoginSuccessResponse login(Long id) {
