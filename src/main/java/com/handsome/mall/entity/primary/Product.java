@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import org.apache.ibatis.annotations.One;
 
 @Entity
 @Table(name = "product")
@@ -42,5 +43,8 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductTag> productTags;
+
+    @OneToOne(mappedBy = "product")
+    private Post post;
 
 }

@@ -52,4 +52,8 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostLike> postLikes;
+
+    @JoinColumn
+    @OneToOne
+    private Product product;
 }
