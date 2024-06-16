@@ -19,7 +19,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.One;
 
 @Entity
-@Table(name = "product")
+@Table(name = "product", indexes = {
+        @Index(name = "idx_product_name_img_url", columnList = "product_name, img_url")
+})
 @NoArgsConstructor
 @Getter
 public class Product {

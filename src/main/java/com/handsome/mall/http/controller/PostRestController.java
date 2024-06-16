@@ -5,6 +5,7 @@ import com.handsome.mall.http.message.SuccessResponse;
 import com.handsome.mall.service.PostService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,9 @@ public class PostRestController<UserId, PostId extends Number> {
   @PostMapping
   public ResponseEntity<SuccessResponse<Object>> createPost(
       @Valid @RequestBody CreatePostDto createPostDto, @AuthenticationPrincipal UserId id) {
-
+    postService.createPost(id, createPostDto);
+    return ResponseEntity.ok(
+        SuccessResponse.builder().message("게시글 작성 성공").status(HttpStatus.OK.toString()).build());
   }
 
 

@@ -17,6 +17,7 @@ public class CreatePostDto {
     private String productName;
     private List<String> imgUrl;
 
+
     @Override
     public String toString() {
         return "CreatePostDto{" +
