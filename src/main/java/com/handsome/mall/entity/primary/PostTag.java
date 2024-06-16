@@ -10,11 +10,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
 @Entity
 @Table(name = "post_tag")
+@NoArgsConstructor
+@Getter
 public class PostTag {
 
     @Id
@@ -22,11 +26,10 @@ public class PostTag {
     @Column(name = "post_tag_id")
     private Long id;
 
-    @Column(name = "member_id")
-    private Long memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id", nullable = false)
+    private Post post;
 
-    @Column(name = "post_tag_body", length = 255)
-    private String body;
-
-    // Getters and Setters
+    @Column(name = "post_tag_body", length = 255, nullable = false)
+    private String tagBody;
 }

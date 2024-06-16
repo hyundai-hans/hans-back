@@ -20,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -36,6 +37,12 @@ public class SecurityConfig {
   private final MemberRepository memberRepository;
   @Value("${encrypt.key.access}")
   public String accessKey;
+
+
+  @Bean
+  public PasswordEncoder bCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
   @Bean
   public ExceptionHandlerFilter exceptionHandlerFilter() {
@@ -63,10 +70,12 @@ public class SecurityConfig {
   public SecurityFilterChain storeSecurityFilterChain(HttpSecurity http) throws Exception {
 
     http.csrf().disable();
-    http.
-        addFilterAt(userAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).
-        addFilterAt(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).
-        addFilterAt(exceptionHandlerFilter(), ExceptionTranslationFilter.class);
+    http
+        .authorizeRequests()
+        .antMatchers("/**/login").permitAll().and()
+        .addFilterBefore(userAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+        .addFilterAfter(jwtAuthenticationFilter(), userAuthenticationFilter().getClass())
+        .addFilterAt(exceptionHandlerFilter(), ExceptionTranslationFilter.class);
 
     return http.build();
   }
@@ -86,15 +95,11 @@ public class SecurityConfig {
   }
 
 
-  @Bean
-  public BCryptPasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
 
 
   @Bean
   public AuthenticationManager userAuthenticationManager() {
-    return new UserAuthenticationManager(memberRepository);
+    return new UserAuthenticationManager(memberRepository,bCryptPasswordEncoder());
   }
 
   @Bean
