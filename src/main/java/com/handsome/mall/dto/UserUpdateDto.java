@@ -1,5 +1,6 @@
 package com.handsome.mall.dto;
 
+import com.handsome.mall.annotation.Password;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +15,7 @@ public class UserUpdateDto {
   private String profileImg;
   @NotNull
   private String nickname;
+  @Password
   @NotNull
   private String password;
 

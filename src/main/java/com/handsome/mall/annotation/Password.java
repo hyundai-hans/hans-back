@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Password {
-    String message() default "Invalid password";
+    String message() default "최소8자 이상 최대 20자 이하의 길이 적어도 하나의 소문자, 대문자, 숫자를 포함해야합니다.";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

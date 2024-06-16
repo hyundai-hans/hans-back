@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @RequiredArgsConstructor
@@ -46,10 +47,13 @@ public class HansUserService implements UserService<Long> {
   @Override
   public void update(UserUpdateDto userUpdateDto, Long id) {
     Member member = getMember(id);
+    userDuplicationChecker.nickNameDuplicationChecker(userUpdateDto.getNickname());
     UserMapper.INSTANCE.updateMemberFromDto(userUpdateDto, member);
     memberRepository.save(member);
   }
 
+
+  @Transactional("primaryTransactionManager")
   @Override
   public UserInfoResponse getInfo(Long userId) {
 
