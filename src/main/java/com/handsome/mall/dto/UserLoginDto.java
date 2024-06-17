@@ -1,24 +1,17 @@
 package com.handsome.mall.dto;
 
-import com.handsome.mall.annotation.Password;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
-@Builder
-public class UserUpdateDto {
+public class UserLoginDto {
 
   @NotNull
-  private String profileImg;
-  @NotNull
-  private String nickname;
-  @Password
+  private String email;
   @NotNull
   private String password;
-
 }

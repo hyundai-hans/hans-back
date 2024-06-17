@@ -4,7 +4,7 @@ import com.handsome.mall.dto.CreatePostDto;
 import com.handsome.mall.dto.FindPostResponse;
 import com.handsome.mall.dto.UpdatePostDto;
 import com.handsome.mall.http.message.SuccessResponse;
-import com.handsome.mall.http.service.PostLikeService;
+import com.handsome.mall.service.PostLikeService;
 import com.handsome.mall.service.PostService;
 import java.util.List;
 import javax.validation.Valid;

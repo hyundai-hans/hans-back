@@ -3,12 +3,10 @@ package com.handsome.mall.config;
 import com.handsome.mall.handler.SystemAuthenticationSuccessHandler;
 import com.handsome.mall.handler.TokenHandler;
 import com.handsome.mall.http.auth.UserAuthenticationManager;
-import com.handsome.mall.repository.primary.MemberRepository;
-import com.handsome.mall.service.JwtTokenProcessor;
-import com.handsome.mall.http.filter.ExceptionHandlerFilter;
 import com.handsome.mall.http.filter.JwtAuthenticationFilter;
 import com.handsome.mall.http.filter.UserAuthenticationFilter;
-
+import com.handsome.mall.repository.primary.MemberRepository;
+import com.handsome.mall.service.JwtTokenProcessor;
 import com.handsome.mall.service.RegisterTokenInvalidationAsBlackListAtSession;
 import com.handsome.mall.service.TokenInvalidationStrategy;
 import javax.servlet.http.HttpSession;
@@ -16,13 +14,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -30,6 +29,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
+
 
   private final HttpSession httpSession;
   @Value("${encrypt.key.life-time}")
@@ -44,10 +44,6 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
-  @Bean
-  public ExceptionHandlerFilter exceptionHandlerFilter() {
-    return new ExceptionHandlerFilter();
-  }
 
 
   @Bean
@@ -69,13 +65,25 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain storeSecurityFilterChain(HttpSecurity http) throws Exception {
 
-    http.csrf().disable();
+    http.csrf().disable().
+        sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+    http.authorizeRequests().
+        antMatchers("/**/login").permitAll().
+        antMatchers(HttpMethod.POST, "/users").permitAll().
+        antMatchers(HttpMethod.POST, "/users/email").permitAll().
+        antMatchers(HttpMethod.POST, "/users/nickname").permitAll().
+        antMatchers(HttpMethod.GET, "/posts").permitAll().
+        antMatchers(HttpMethod.GET, "/posts/*").permitAll().
+        antMatchers(HttpMethod.GET, "/products/*").permitAll().
+        antMatchers(HttpMethod.GET, "/tags/*").permitAll().
+        anyRequest().authenticated();
+
+    http.logout().disable();
+
     http
-        .authorizeRequests()
-        .antMatchers("/**/login").permitAll().and()
         .addFilterBefore(userAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
-        .addFilterAfter(jwtAuthenticationFilter(), userAuthenticationFilter().getClass())
-        .addFilterAt(exceptionHandlerFilter(), ExceptionTranslationFilter.class);
+        .addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
@@ -93,7 +101,6 @@ public class SecurityConfig {
     authenticationFilter.setFilterProcessesUrl("/**/login");
     return authenticationFilter;
   }
-
 
 
 

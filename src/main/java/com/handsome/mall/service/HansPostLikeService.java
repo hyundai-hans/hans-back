@@ -1,4 +1,4 @@
-package com.handsome.mall.http.service;
+package com.handsome.mall.service;
 
 import com.handsome.mall.entity.primary.Member;
 import com.handsome.mall.entity.primary.Post;

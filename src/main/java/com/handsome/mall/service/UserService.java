@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService<ID extends Object> {
   public void signUp(UserSignUpDto signUpDto);
-  public LoginSuccessResponse login(ID id);
+  public LoginSuccessResponse getUserProfile(ID id);
   public void update(UserUpdateDto userUpdateDto, ID id);
   UserInfoResponse getInfo(ID userId);
 }

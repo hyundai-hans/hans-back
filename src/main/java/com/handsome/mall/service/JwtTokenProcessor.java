@@ -29,7 +29,7 @@ public class JwtTokenProcessor {
   }
 
   private boolean validateAccessToken(String token) throws AuthException {
-    return tokenInvalidationStrategy.isRegistered(token) && JwtUtil.isTokenValid(token, accessKey);
+    return !tokenInvalidationStrategy.isRegistered(token) && JwtUtil.isTokenValid(token, accessKey);
   }
 
   public String createAccessToken(String subject, Map<String, Object> claimsList) {
@@ -39,6 +39,13 @@ public class JwtTokenProcessor {
     }
     return JwtUtil.generateTokenWithClaims(subject, accessKey,
         accessKeyLifeTime, claimsList);
+  }
+
+  public String getSubject(JwtType jwtType,String token){
+    if(jwtType.equals(JwtType.access)){
+    return JwtUtil.extractTokenSubject(token,accessKey);
+    }
+    throw new AuthException("존재하지 않는 토큰 타입입니다.");
   }
   }
 

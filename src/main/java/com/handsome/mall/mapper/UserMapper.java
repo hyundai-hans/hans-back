@@ -29,9 +29,18 @@ public interface UserMapper {
 
     UserSignUpDto toDto(Member member);
 
+
+    @Mapping(target = "nickname",source = "member.nickname")
+    @Mapping(target = "profileImg",source = "member.profileImg")
     LoginSuccessResponse toLoginSuccessDto(Member member);
 
-    void updateMemberFromDto(UserUpdateDto userUpdateDto, @MappingTarget Member member);
+
+      @Mappings({
+        @Mapping(source = "userUpdateDto.profileImg", target = "profileImg"),
+        @Mapping(source = "userUpdateDto.nickname", target = "nickname"),
+        @Mapping(source = "userUpdateDto.password", target = "password")
+    })
+    Member mapUpdateDtoToMember(UserUpdateDto userUpdateDto, Member member);
 
   @Mappings({
         @Mapping(source = "member.nickname", target = "nickname"),

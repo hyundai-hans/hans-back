@@ -1,4 +1,4 @@
-package com.handsome.mall.http.service;
+package com.handsome.mall.service;
 
 import org.springframework.stereotype.Service;
 

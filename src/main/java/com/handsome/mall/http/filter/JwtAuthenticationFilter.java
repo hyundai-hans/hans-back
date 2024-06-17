@@ -3,16 +3,19 @@ package com.handsome.mall.http.filter;
 import com.handsome.mall.exception.AuthException;
 import com.handsome.mall.handler.TokenHandler;
 import com.handsome.mall.util.ExtractStringByRequest;
-import com.handsome.mall.valueobject.JWTAuthenticationShouldNotFilter;
+import com.handsome.mall.util.JsonBinderUtil;
+import com.handsome.mall.valueobject.AuthRequestHeaderPrefix;
 import com.handsome.mall.valueobject.JwtType;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @AllArgsConstructor
@@ -20,54 +23,40 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
   private TokenHandler tokenHandler;
 
-  @Override
-  protected boolean shouldNotFilter(HttpServletRequest request) {
-    return shouldNotFilterBySystemPolicy(request)  || shouldNotFilterForAllUserCanAccess(request);
-  }
 
   @Override
   public void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
       FilterChain filterChain) throws ServletException, IOException {
-    String token =  ExtractStringByRequest.extractKey(request,"Authorization").substring(7);
 
+    String header = request.getHeader(AuthRequestHeaderPrefix.AUTHORIZATION_HEADER);
+
+    if(header!=null){
     try {
-      tokenHandler.isValidToken(JwtType.access,token);
+      String token = ExtractStringByRequest.extractKey(request, AuthRequestHeaderPrefix.AUTHORIZATION_HEADER).substring(7);
+
+      if (!tokenHandler.isValidToken(JwtType.access, token)) {
+        response.setStatus(401);
+      } else {
+        setSecurityContext(tokenHandler.getUserId(JwtType.access, token));
+        filterChain.doFilter(request, response);
+      }
     } catch (ExpiredJwtException expiredJwtException) {
+      JsonBinderUtil.setResponseWithJson(response, 417, expiredJwtException.getClaims());
+      filterChain.doFilter(request,response);
+    } catch (AuthException | MalformedJwtException | StringIndexOutOfBoundsException e) {
       response.setStatus(401);
-      throw new ExpiredJwtException(expiredJwtException.getHeader(),
-          expiredJwtException.getClaims(), "로그인 시간이 만료되었습니다.");
-    } catch (AuthException authException) {
-      throw new AuthException(authException.getMessage());
     }
+    }
+    else filterChain.doFilter(request,response);
 
-    filterChain.doFilter(request, response);
+  }
+
+  private void setSecurityContext(String subject) {
+    SecurityContextHolder.getContext().setAuthentication(
+        new UsernamePasswordAuthenticationToken(Long.parseLong(subject), null, null));
   }
 
 
-
-
-  private boolean shouldNotFilterForAllUserCanAccess(HttpServletRequest request) {
-    String uri = request.getRequestURI();
-    if (uri.matches(JWTAuthenticationShouldNotFilter.POST_SEE_REGEX) && request.getMethod().equals(HttpMethod.GET.name())) {
-      return true;
-    }
-    if (uri.contains(JWTAuthenticationShouldNotFilter.POST_SEARCH)) {
-      return true;
-    }
-    if(uri.contains(JWTAuthenticationShouldNotFilter.TAG_SEARCH)) {
-      return true;
-    }
-    return false;
-  }
-
-
-
-
-  private boolean shouldNotFilterBySystemPolicy(HttpServletRequest request) {
-    String requestURI = request.getRequestURI();
-    return requestURI.contains(JWTAuthenticationShouldNotFilter.SIGNUP_ANT) && request.getMethod().equals(HttpMethod.POST.name())
-        || requestURI.contains(JWTAuthenticationShouldNotFilter.LOGIN_ANT);
-  }
 
 
 }
