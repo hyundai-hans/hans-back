@@ -1,8 +1,11 @@
 package com.handsome.mall.http.controller;
 
+import com.handsome.mall.dto.EmailDto;
+import com.handsome.mall.dto.NicknameDto;
 import com.handsome.mall.dto.UserSignUpDto;
 import com.handsome.mall.dto.UserUpdateDto;
 import com.handsome.mall.http.message.SuccessResponse;
+import com.handsome.mall.service.UserDuplicationChecker;
 import com.handsome.mall.service.UserService;
 import com.handsome.mall.valueobject.AuthRequestHeaderPrefix;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +28,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestController<ID> {
 
   private final UserService<ID> userService;
+  private final UserDuplicationChecker duplicationChecker;
+
+  @PostMapping("/email")
+  public ResponseEntity<SuccessResponse<Object>> emailDuplicationCheck(
+      @RequestBody @Valid EmailDto emailDto) {
+    duplicationChecker.emailDuplicationChecker(emailDto.getEmail());
+    return ResponseEntity.ok(
+        SuccessResponse.builder().status(HttpStatus.OK.toString()).message("중복 되지 않은 이메일입니다.").build());
+  }
+
+  @PostMapping("/nickname")
+  public ResponseEntity<SuccessResponse<Object>> nicknameDuplicatonChek(@RequestBody @Valid
+      NicknameDto nicknameDto) {
+    duplicationChecker.nickNameDuplicationChecker(nicknameDto.getNickname());
+   return ResponseEntity.ok(
+        SuccessResponse.builder().status(HttpStatus.OK.toString()).message("중복되지 않은 닉네임입니다.").build());
+
+  }
+
 
   @PostMapping
   public ResponseEntity<SuccessResponse<Object>> signUp(

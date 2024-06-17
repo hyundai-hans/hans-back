@@ -1,5 +1,6 @@
 package com.handsome.mall.entity.history;
 
+import com.handsome.mall.entity.BaseEntity;
 import com.handsome.mall.entity.id.ViewHistoryId;
 import com.handsome.mall.entity.primary.Member;
 import com.handsome.mall.entity.primary.Product;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "view_history")
 @NoArgsConstructor
 @Getter
-public class ViewHistory {
+public class ViewHistory extends BaseEntity {
 
     @EmbeddedId
     private ViewHistoryId id;

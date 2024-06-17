@@ -1,5 +1,6 @@
 package com.handsome.mall.entity.primary;
 
+import com.handsome.mall.entity.BaseEntity;
 import com.handsome.mall.entity.history.ViewHistory;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ import org.apache.ibatis.annotations.One;
 })
 @NoArgsConstructor
 @Getter
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -27,6 +28,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 )
 public class PrimaryDataSourceConfig {
 
+     @Value("${hibernate.primary.ddl-auto}")
+    String ddlSetting;
 
     @Bean(name = "primaryDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.primary")
@@ -57,7 +60,7 @@ public class PrimaryDataSourceConfig {
 
     private Map<String, Object> getProperties() {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.hbm2ddl.auto", "create-drop");
+        properties.put("hibernate.hbm2ddl.auto", ddlSetting);
         properties.put("hibernate.show_sql", "true");
         return properties;
     }
