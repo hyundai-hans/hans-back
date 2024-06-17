@@ -31,10 +31,13 @@ public class PostRestController<UserId, PostId extends Long> {
   private final PostLikeService<UserId, PostId> postLikeService;
   private final PostService<UserId, PostId> postService;
 
+  
+
+
   @GetMapping
   public ResponseEntity<SuccessResponse<List<FindPostResponse>>> searchPost(
       @RequestParam("title") String title) {
-    List<FindPostResponse> findPostResponseList = postService.findPost(title);
+    List<FindPostResponse> findPostResponseList = postService.findPostByTitle(title);
     return ResponseEntity.ok(
         SuccessResponse.<List<FindPostResponse>>builder().message("타이틀 검색 완료")
             .status(HttpStatus.OK.toString())

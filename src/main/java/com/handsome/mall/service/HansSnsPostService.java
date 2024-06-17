@@ -55,14 +55,14 @@ public class HansSnsPostService implements PostService<Long, Long> {
    */
   @Transactional
   @Override
-  public List<FindPostResponse> findPost(String postName) {
-    List<Post> postList = postRepository.findByTitleLike(postName);
+  public List<FindPostResponse> findPostByTitle(String title) {
+    List<Post> postList = postRepository.findByTitleLike(title);
     String thumbNailImgUrl = postList.get(0).getPostImages().stream().filter(
         PostImg::getIsThumbnail).findFirst().get().getImgUrl();
     return PostMapper.INSTANCE.postsToFindPostResponses(postList,thumbNailImgUrl);
-
-
   }
+
+
 
   @Override
   public void updatePost(Long userId, UpdatePostDto updatePostDto) {

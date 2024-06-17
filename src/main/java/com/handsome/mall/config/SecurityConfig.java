@@ -9,6 +9,8 @@ import com.handsome.mall.repository.primary.MemberRepository;
 import com.handsome.mall.service.JwtTokenProcessor;
 import com.handsome.mall.service.RegisterTokenInvalidationAsBlackListAtSession;
 import com.handsome.mall.service.TokenInvalidationStrategy;
+import java.util.Collections;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,6 +18,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,6 +27,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -65,11 +70,21 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain storeSecurityFilterChain(HttpSecurity http) throws Exception {
 
-    http.csrf().disable().
+    http
+        .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
+          CorsConfiguration config = new CorsConfiguration();
+          config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+          config.setAllowedMethods(Collections.singletonList("*"));
+          config.setAllowCredentials(true);
+          config.setAllowedHeaders(Collections.singletonList("*"));
+          return config;
+        }));
+
+    http.csrf().disable().formLogin().disable().
         sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     http.authorizeRequests().
-        antMatchers("/**/login").permitAll().
+        antMatchers(HttpMethod.POST, "/**/login").permitAll().
         antMatchers(HttpMethod.POST, "/users").permitAll().
         antMatchers(HttpMethod.POST, "/users/email").permitAll().
         antMatchers(HttpMethod.POST, "/users/nickname").permitAll().
@@ -85,7 +100,6 @@ public class SecurityConfig {
     http
         .addFilterBefore(userAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
         .addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
     return http.build();
   }
 
