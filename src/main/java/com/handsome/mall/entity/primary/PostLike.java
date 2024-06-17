@@ -1,5 +1,6 @@
 package com.handsome.mall.entity.primary;
 
+import com.handsome.mall.entity.BaseEntity;
 import com.handsome.mall.entity.id.PostLikeId;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -24,7 +25,7 @@ import javax.persistence.*;
 @Getter
 @AllArgsConstructor
 @Builder
-public class PostLike {
+public class PostLike extends BaseEntity {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

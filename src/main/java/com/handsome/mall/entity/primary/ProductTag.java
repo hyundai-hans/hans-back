@@ -1,5 +1,6 @@
 package com.handsome.mall.entity.primary;
 
+import com.handsome.mall.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ import javax.persistence.*;
 @Table(name = "product_tag")
 @NoArgsConstructor
 @Getter
-public class ProductTag {
+public class ProductTag extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

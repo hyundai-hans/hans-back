@@ -38,7 +38,7 @@ public class UserRestController<ID> {
         SuccessResponse.builder().status(HttpStatus.OK.toString()).message("중복 되지 않은 이메일입니다.").build());
   }
 
-  @PostMapping
+  @PostMapping("/nickname")
   public ResponseEntity<SuccessResponse<Object>> nicknameDuplicatonChek(@RequestBody @Valid
       NicknameDto nicknameDto) {
     duplicationChecker.nickNameDuplicationChecker(nicknameDto.getNickname());

@@ -1,5 +1,6 @@
 package com.handsome.mall.entity.primary;
 
+import com.handsome.mall.entity.BaseEntity;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "member")
 @NoArgsConstructor
 @Getter
-public class Member {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
