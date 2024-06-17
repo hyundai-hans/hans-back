@@ -32,8 +32,7 @@ public class HansPostLikeService implements PostLikeService<Long, Long> {
     if (postLikeOptional.isPresent()) {
       PostLike postLike = postLikeOptional.get();
       boolean updatedStatus = !postLike.getIsLiked();
-      PostLikeMapper.INSTANCE.updatePostLike(postLike.getId(), postLike.getMember(),
-          postLike.getPost(), updatedStatus);
+      PostLikeMapper.INSTANCE.updatePostLike(postLike,updatedStatus);
     } else {
       PostLike newPostLike = PostLike.builder().post(post).member(member).isLiked(true).build();
       postLikesRepository.save(newPostLike);

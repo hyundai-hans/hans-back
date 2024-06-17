@@ -5,10 +5,10 @@ import com.handsome.mall.dto.UserUpdateDto;
 import com.handsome.mall.dto.response.LoginSuccessResponse;
 import com.handsome.mall.dto.response.UserInfoResponse;
 import com.handsome.mall.entity.primary.Member;
+import java.time.LocalDateTime;
 import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 import org.mapstruct.factory.Mappers;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +38,9 @@ public interface UserMapper {
       @Mappings({
         @Mapping(source = "userUpdateDto.profileImg", target = "profileImg"),
         @Mapping(source = "userUpdateDto.nickname", target = "nickname"),
-        @Mapping(source = "userUpdateDto.password", target = "password")
+        @Mapping(source = "userUpdateDto.password", target = "password"),
+              @Mapping(target = "createdAt", source = "member.createdAt")
+
     })
     Member mapUpdateDtoToMember(UserUpdateDto userUpdateDto, Member member);
 

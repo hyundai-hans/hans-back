@@ -16,13 +16,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "post_img")
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Getter
+@SuperBuilder
 public class PostImg extends BaseEntity {
 
     @Id

@@ -18,13 +18,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "post_like")
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 public class PostLike extends BaseEntity {
 
         @Id

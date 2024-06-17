@@ -1,6 +1,7 @@
 package com.handsome.mall.entity.primary;
 
 import com.handsome.mall.entity.BaseEntity;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,12 +16,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Builder
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@SuperBuilder
 @Table(name = "member")
 public class Member extends BaseEntity {
 
@@ -49,5 +51,6 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
     private List<PostLike> postLikes;
+
 
 }

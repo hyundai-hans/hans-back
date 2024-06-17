@@ -15,11 +15,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "product_tag")
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@SuperBuilder
 public class ProductTag extends BaseEntity {
 
     @Id

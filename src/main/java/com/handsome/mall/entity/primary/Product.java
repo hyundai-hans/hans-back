@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import lombok.experimental.SuperBuilder;
 import org.apache.ibatis.annotations.One;
 
 @Entity
@@ -24,6 +25,8 @@ import org.apache.ibatis.annotations.One;
         @Index(name = "idx_product_name_img_url", columnList = "product_name, product_img_url")
 })
 @NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
 @Getter
 public class Product extends BaseEntity {
 
