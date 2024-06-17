@@ -90,9 +90,10 @@ public class UserRestController<ID> {
 
   @GetMapping
   public ResponseEntity<SuccessResponse<Object>> getUserInfo(@AuthenticationPrincipal ID userId) {
-    userService.getInfo(userId);
-   return ResponseEntity.ok(
-        SuccessResponse.builder().status(HttpStatus.OK.toString()).message("유저 업데이트 성공").build());
+
+    return ResponseEntity.ok(
+        SuccessResponse.builder().status(HttpStatus.OK.toString()).message("유저 정보 반환")
+            .data(userService.getInfo(userId)).build());
   }
 
 
