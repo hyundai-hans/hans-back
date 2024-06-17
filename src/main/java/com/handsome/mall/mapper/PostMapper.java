@@ -58,6 +58,7 @@ public interface PostMapper {
     @Mapping(source = "post.id", target = "postId")
     @Mapping(source = "post.member.nickname", target = "nickname")
     @Mapping(source = "thumbNailUrl", target = "thumbNailImgUrl")
+    @Mapping(source = "createdAt", target = "createdAt")
     FindPostResponse postToFindPostResponse(Post post, String thumbNailUrl);
 
 

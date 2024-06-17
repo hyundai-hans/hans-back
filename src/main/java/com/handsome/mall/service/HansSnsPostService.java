@@ -48,12 +48,17 @@ public class HansSnsPostService implements PostService<Long, Long> {
     postRepository.delete(post);
   }
 
+  /**
+   * *
+   * @thumbNailImgUrl Optional.get() won't be thrown an exception there is thumbnail img essentially
+   * @return
+   */
   @Transactional
   @Override
   public List<FindPostResponse> findPost(String postName) {
     List<Post> postList = postRepository.findByTitleLike(postName);
     String thumbNailImgUrl = postList.get(0).getPostImages().stream().filter(
-        PostImg::getIsThumbnail).toString();
+        PostImg::getIsThumbnail).findFirst().get().getImgUrl();
     return PostMapper.INSTANCE.postsToFindPostResponses(postList,thumbNailImgUrl);
 
 
