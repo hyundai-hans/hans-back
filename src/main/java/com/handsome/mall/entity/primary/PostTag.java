@@ -20,6 +20,7 @@ import javax.persistence.*;
 @Table(name = "post_tag")
 @NoArgsConstructor
 @Builder
+@AllArgsConstructor
 @Getter
 public class PostTag {
 

@@ -19,6 +19,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "post_img")
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Getter
 public class PostImg {

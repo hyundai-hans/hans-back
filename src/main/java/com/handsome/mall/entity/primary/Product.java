@@ -20,7 +20,7 @@ import org.apache.ibatis.annotations.One;
 
 @Entity
 @Table(name = "product", indexes = {
-        @Index(name = "idx_product_name_img_url", columnList = "product_name, img_url")
+        @Index(name = "idx_product_name_img_url", columnList = "product_name, product_img_url")
 })
 @NoArgsConstructor
 @Getter

@@ -1,5 +1,6 @@
 package com.handsome.mall.mapper;
 
+import com.handsome.mall.dto.ImgDto;
 import com.handsome.mall.entity.primary.PostImg;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,4 +27,10 @@ public interface PostImgMapper {
         }
         return postImages;
     }
+
+      @Mapping(source = "imgId", target = "id")
+    PostImg imgDtoToPostImg(ImgDto imgDto);
+
+    @Mapping(source = "id", target = "imgId")
+    ImgDto postImgToImgDto(PostImg postImg);
 }
