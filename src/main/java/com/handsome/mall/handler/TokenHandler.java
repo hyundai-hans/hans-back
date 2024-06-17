@@ -19,12 +19,17 @@ public class TokenHandler {
   }
   public void invalidateToken(JwtType type, String value){
      jwtTokenProcessor.invalidateToken(type, value);
-
   }
 
   public boolean isValidToken(JwtType type, String value){
     return jwtTokenProcessor.isValidToken(type, value);
   }
+
+  public String getUserId(JwtType type, String value){
+    return jwtTokenProcessor.getSubject(type,value);
+
+  }
+
 
 
 }
