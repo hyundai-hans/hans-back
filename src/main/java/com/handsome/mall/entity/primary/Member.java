@@ -37,7 +37,7 @@ public class Member {
     @Column(name = "member_password", length = 255, nullable = false)
     private String password;
 
-    @Column(name = "member_profile_img",nullable = false, length = 255)
+    @Column(name = "member_profile_img", nullable = false, length = 255)
     private String profileImg;
 
     @Column(name = "member_role", length = 10, nullable = false)
@@ -45,5 +45,8 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Post> posts;
+
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+    private List<PostLike> postLikes;
 
 }

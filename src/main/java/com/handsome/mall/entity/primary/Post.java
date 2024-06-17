@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +23,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "post")
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 public class Post {
 
@@ -52,4 +55,8 @@ public class Post {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostLike> postLikes;
+
+    @JoinColumn
+    @OneToOne
+    private Product product;
 }

@@ -53,6 +53,13 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
   }
 
+    @ExceptionHandler(ProductException.class)
+    public ResponseEntity<Map<String, List<String>>> productException(
+      ProductException ex) {
+    List<String> errors = Collections.singletonList(ex.getMessage());
+    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+  }
+
 
   @ExceptionHandler(Exception.class)
   public final ResponseEntity<Map<String, List<String>>> handleGeneralExceptions(Exception ex) {
