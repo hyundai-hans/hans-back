@@ -10,6 +10,6 @@ import org.springframework.stereotype.Service;
 public interface PostService<UserId extends Object, PostId extends Number> {
   public void createPost(UserId userId, CreatePostDto createPostDto);
   void deletePost(UserId userId, PostId postId);
-  List<FindPostResponse> findPost(String postName);
+  List<FindPostResponse> findPostByTitle(String title);
   void updatePost(UserId userId, UpdatePostDto updatePostDto);
 }

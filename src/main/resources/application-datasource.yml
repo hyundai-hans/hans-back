@@ -22,4 +22,4 @@ hibernate:
   history:
     ddl-auto: update
   primary:
-    ddl-auto: create-drop
+    ddl-auto: update

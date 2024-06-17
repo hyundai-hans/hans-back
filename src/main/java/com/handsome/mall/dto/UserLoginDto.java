@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class UserLoginDto {
-
   @NotNull
   private String email;
   @NotNull
