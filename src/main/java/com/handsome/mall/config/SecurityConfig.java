@@ -77,6 +77,7 @@ public class SecurityConfig {
           config.setAllowedMethods(Collections.singletonList("*"));
           config.setAllowCredentials(false);
           config.setAllowedHeaders(Collections.singletonList("*"));
+          config.addExposedHeader("*");
           return config;
         }));
 
