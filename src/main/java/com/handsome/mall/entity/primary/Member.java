@@ -19,9 +19,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @AllArgsConstructor
-@Table(name = "member")
 @NoArgsConstructor
 @Getter
+@Table(name = "member")
 public class Member extends BaseEntity {
 
     @Id

@@ -65,12 +65,18 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain storeSecurityFilterChain(HttpSecurity http) throws Exception {
 
-    http.csrf().disable().cors().disable().
+    http.csrf().disable().
         sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     http.authorizeRequests().
         antMatchers("/**/login").permitAll().
         antMatchers(HttpMethod.POST, "/users").permitAll().
+        antMatchers(HttpMethod.POST, "/users/email").permitAll().
+        antMatchers(HttpMethod.POST, "/users/nickname").permitAll().
+        antMatchers(HttpMethod.GET, "/posts").permitAll().
+        antMatchers(HttpMethod.GET, "/posts/*").permitAll().
+        antMatchers(HttpMethod.GET, "/products/*").permitAll().
+        antMatchers(HttpMethod.GET, "/tags/*").permitAll().
         anyRequest().authenticated();
 
     http.logout().disable();

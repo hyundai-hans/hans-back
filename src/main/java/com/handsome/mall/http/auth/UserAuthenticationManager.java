@@ -38,7 +38,7 @@ public class UserAuthenticationManager implements AuthenticationManager {
     if (!encoder.matches(password, member.getPassword())) {
       throw new AuthException("계정 정보가 불일치 합니다.");
     }
-    return new UsernamePasswordAuthenticationToken(member.getEmail(),member.getPassword(),
+    return new UsernamePasswordAuthenticationToken(member.getId(),member.getPassword(),
         Collections.singleton(new SimpleGrantedAuthority(member.getRole())));
   }
 }

@@ -13,7 +13,6 @@ import com.handsome.mall.repository.primary.MemberRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,17 +37,18 @@ public class HansUserService implements UserService<Long> {
 
 
   @Override
-  public LoginSuccessResponse login(Long id) {
+  public LoginSuccessResponse getUserProfile(Long id) {
     Member member = getMember(id);
     return UserMapper.INSTANCE.toLoginSuccessDto(member);
 
   }
 
+  @Transactional("primaryTransactionManager")
   @Override
   public void update(UserUpdateDto userUpdateDto, Long id) {
     Member member = getMember(id);
     userDuplicationChecker.nickNameDuplicationChecker(userUpdateDto.getNickname());
-    UserMapper.INSTANCE.updateMemberFromDto(userUpdateDto, member);
+    member = UserMapper.INSTANCE.mapUpdateDtoToMember(userUpdateDto, member);
     memberRepository.save(member);
   }
 

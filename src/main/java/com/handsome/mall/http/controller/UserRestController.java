@@ -4,7 +4,9 @@ import com.handsome.mall.dto.EmailDto;
 import com.handsome.mall.dto.NicknameDto;
 import com.handsome.mall.dto.UserSignUpDto;
 import com.handsome.mall.dto.UserUpdateDto;
+import com.handsome.mall.dto.response.LoginSuccessResponse;
 import com.handsome.mall.http.message.SuccessResponse;
+import com.handsome.mall.service.TokenInvalidationStrategy;
 import com.handsome.mall.service.UserDuplicationChecker;
 import com.handsome.mall.service.UserService;
 import com.handsome.mall.valueobject.AuthRequestHeaderPrefix;
@@ -27,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserRestController<ID> {
 
+  private final TokenInvalidationStrategy strategy;
   private final UserService<ID> userService;
   private final UserDuplicationChecker duplicationChecker;
 
@@ -61,12 +64,17 @@ public class UserRestController<ID> {
     return ResponseEntity.ok("로그인 성공");
   }
 
+  @GetMapping("/profile")
+  public ResponseEntity<SuccessResponse<LoginSuccessResponse>> getUserProfile(@AuthenticationPrincipal ID id) {
+    LoginSuccessResponse response = userService.getUserProfile(id);
+    return ResponseEntity.ok(SuccessResponse.<LoginSuccessResponse>builder().data(response).message("프로필 이미지 전달 성공").status(HttpStatus.OK.toString()).build());
+  }
+
   @PostMapping("/logout")
-  public ResponseEntity<SuccessResponse<Object>> logout(@AuthenticationPrincipal ID userId,
-      HttpSession httpSession, HttpServletRequest request) {
+  public ResponseEntity<SuccessResponse<Object>> logout(HttpServletRequest request) {
     String token = request.getHeader(AuthRequestHeaderPrefix.AUTHORIZATION_HEADER)
         .substring(AuthRequestHeaderPrefix.TOKEN_PREFIX.length());
-    httpSession.setAttribute(token, userId);
+    strategy.invalidate(token);
     return ResponseEntity.ok(
         SuccessResponse.builder().message("로그아웃 성공").status(HttpStatus.OK.toString()).build());
   }
