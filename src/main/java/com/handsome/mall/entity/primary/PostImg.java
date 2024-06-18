@@ -42,4 +42,5 @@ public class PostImg extends BaseEntity {
 
     @Column(name = "is_thumbnail", nullable = false)
     private Boolean isThumbnail;
+
 }

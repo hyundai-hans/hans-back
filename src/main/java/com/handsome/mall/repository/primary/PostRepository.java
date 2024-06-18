@@ -14,9 +14,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-  public Optional<Post> findById(Long productId);
+    Optional<Post> findById(Long productId);
 
-  public Optional<Post> findByMemberIdAndProductId(Long memberId, Long productId);
+   Optional<Post> findByMemberIdAndProductId(Long memberId, Long productId);
 
     @Query("SELECT p FROM Post p WHERE (:title is null or p.title LIKE %:title%)")
   Page<Post> findByTitleContainingOrderByLikes(@Param("title") String title, Pageable pageable);

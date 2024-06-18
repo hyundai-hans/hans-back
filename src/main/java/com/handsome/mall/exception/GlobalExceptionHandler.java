@@ -51,20 +51,20 @@ public class GlobalExceptionHandler {
   public ResponseEntity<Map<String, List<String>>> userException(
       UserException ex) {
     List<String> errors = Collections.singletonList(ex.getMessage());
-    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
   }
 
     @ExceptionHandler(ProductException.class)
     public ResponseEntity<Map<String, List<String>>> productException(
       ProductException ex) {
     List<String> errors = Collections.singletonList(ex.getMessage());
-    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
   }
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Map<String, List<String>>> methodArgumentException(
       ProductException ex) {
     List<String> errors = Collections.singletonList(ex.getMessage());
-    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
   }
 
 

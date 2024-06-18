@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class ImgDto {
   private Long imgId;
   private String imgUrl;
-  private boolean isThumbnail;
+  private Boolean isThumbnail;
 }

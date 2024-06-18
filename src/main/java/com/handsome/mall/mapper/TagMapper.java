@@ -1,6 +1,8 @@
 package com.handsome.mall.mapper;
 
 import com.handsome.mall.dto.TagDto;
+import com.handsome.mall.dto.UpdatePostDto;
+import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.entity.primary.PostTag;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,9 +30,9 @@ public interface TagMapper {
   }
 
 
-  @Mapping(source = "tagId", target = "id")
-  @Mapping(source = "body", target = "tagBody")
-  PostTag tagDtoToPostTag(TagDto tagDto);
+  @Mapping(source = "tagDto.tagId", target = "id")
+  @Mapping(source = "tagDto.body", target = "tagBody")
+  PostTag updateThroughTagDto(TagDto tagDto, PostTag postTag);
 
   @Mapping(source = "id", target = "tagId")
   @Mapping(source = "tagBody", target = "body")

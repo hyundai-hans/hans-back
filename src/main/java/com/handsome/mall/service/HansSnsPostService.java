@@ -25,6 +25,8 @@ import com.handsome.mall.repository.primary.PostLikeRepository;
 import com.handsome.mall.repository.primary.PostRepository;
 import com.handsome.mall.repository.primary.ProductRepository;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -122,21 +124,40 @@ public class HansSnsPostService implements PostService<Long, Long> {
         imgDtoList);
   }
 
-
+@Transactional("primaryTransactionManager")
   @Override
   public void updatePost(Long userId, UpdatePostDto updatePostDto) {
+    Post post = findPost(userId,updatePostDto.getPostId());
 
-    String title = updatePostDto.getTitle();
-    String body = updatePostDto.getBody();
-    List<PostTag> tagList = updatePostDto.getTagList().stream()
-        .map(TagMapper.INSTANCE::tagDtoToPostTag)
-        .collect(Collectors.toList());
-    List<PostImg> postImgList = updatePostDto.getImgList()
-        .stream()
-        .map(PostImgMapper.INSTANCE::imgDtoToPostImg)
-        .collect(Collectors.toList());
 
-   Post updatedPost =  PostMapper.INSTANCE.updatePostDtoToPost(title,body,tagList,postImgList);
+
+    List<PostTag> updatedTagList = post.getPostTags().stream()
+            .map(postTag -> {
+                Optional<TagDto> matchingTagDto = updatePostDto.getTagList().stream()
+                        .filter(tagDto -> tagDto.getTagId().equals(postTag.getId()))
+                        .findFirst();
+                if (matchingTagDto.isPresent()) {
+                    return PostMapper.INSTANCE.updateThroughTagDto(matchingTagDto.get(), postTag);
+                }
+                return postTag;
+            })
+            .collect(Collectors.toList());
+
+
+
+    List<PostImg> updatedPostImgList = post.getPostImages().stream()
+            .map(postImg -> {
+                Optional<ImgDto> matchingImgDto = updatePostDto.getImgList().stream()
+                        .filter(imgDto -> imgDto.getImgId().equals(postImg.getId()))
+                        .findFirst();
+                if (matchingImgDto.isPresent()) {
+                    return PostImgMapper.INSTANCE.imgDtoToPostImg(matchingImgDto.get(), postImg);
+                }
+                return postImg;
+            })
+            .collect(Collectors.toList());
+
+   Post updatedPost =  PostMapper.INSTANCE.updatePostDtoToPost(updatePostDto,post,updatedTagList,updatedPostImgList);
    postRepository.save(updatedPost);
 
   }

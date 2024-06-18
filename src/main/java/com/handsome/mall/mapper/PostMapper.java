@@ -6,6 +6,7 @@ import com.handsome.mall.dto.ImgDto;
 import com.handsome.mall.dto.PostDto;
 import com.handsome.mall.dto.ProductDto;
 import com.handsome.mall.dto.TagDto;
+import com.handsome.mall.dto.UpdatePostDto;
 import com.handsome.mall.dto.response.PostDetailResponse;
 import com.handsome.mall.entity.primary.Member;
 import com.handsome.mall.entity.primary.Post;
@@ -39,15 +40,14 @@ public interface PostMapper {
             .orElse(null);
     }
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "member", ignore = true)
-    @Mapping(target = "postLikes", ignore = true)
-    @Mapping(target = "product", ignore = true)
-    @Mapping(target = "title", source = "title")
-    @Mapping(target = "body", source = "body")
+
+    @Mapping(target = "id", source = "updatePostDto.postId")
+    @Mapping(target = "title", source = "updatePostDto.title")
+    @Mapping(target = "body", source = "updatePostDto.body")
     @Mapping(target = "postTags", source = "postTagList")
     @Mapping(target = "postImages", source = "postImgList")
-    Post updatePostDtoToPost(String title,String body,List<PostTag> postTagList, List<PostImg> postImgList);
+    Post updatePostDtoToPost(UpdatePostDto updatePostDto, Post post, List<PostTag> postTagList,
+        List<PostImg> postImgList);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "postTags", source = "postTagList")
@@ -57,7 +57,7 @@ public interface PostMapper {
     @Mapping(target = "product", source = "product")
     @Mapping(target = "member", source = "member")
     Post createPostDtoToPost(CreatePostDto createPostDto, Product product,
-        List<PostTag> postTagList, Member member,List<PostImg> postImgList);
+        List<PostTag> postTagList, Member member, List<PostImg> postImgList);
 
 
     @Mapping(source = "post.id", target = "postId")
@@ -74,7 +74,8 @@ public interface PostMapper {
     }
 
 
-
+    @Mapping(source = "tagDto.body", target = "tagBody")
+    PostTag updateThroughTagDto(TagDto tagDto, PostTag postTag);
 
     @Mapping(target = "likesCount", expression = "java(calculateLikesCount(post))")
     @Mapping(source = "post.member.nickname", target = "nickname")

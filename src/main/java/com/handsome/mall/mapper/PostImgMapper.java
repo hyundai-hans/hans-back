@@ -5,6 +5,7 @@ import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.entity.primary.PostImg;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -29,8 +30,11 @@ public interface PostImgMapper {
         return postImages;
     }
 
-      @Mapping(source = "imgId", target = "id")
-    PostImg imgDtoToPostImg(ImgDto imgDto);
+
+
+      @Mapping(source = "imgDto.imgUrl", target = "imgUrl")
+      @Mapping(source = "imgDto.isThumbnail", target = "isThumbnail")
+    PostImg imgDtoToPostImg(ImgDto imgDto, PostImg postImg);
 
     @Mapping(source = "id", target = "imgId")
     ImgDto postImgToImgDto(PostImg postImg);

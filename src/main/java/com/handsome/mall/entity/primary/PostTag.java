@@ -40,3 +40,4 @@ public class PostTag extends BaseEntity {
     @Column(name = "post_tag_body", length = 255, nullable = false)
     private String tagBody;
 }
+
