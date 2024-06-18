@@ -61,7 +61,7 @@ public class PostRestController<UserId, PostId extends Long> {
         SuccessResponse.builder().message("게시글 작성 성공").status(HttpStatus.OK.toString()).build());
   }
 
-    @GetMapping
+    @GetMapping("/{postId}")
   public ResponseEntity<SuccessResponse<PostDetailResponse>> findPost(@PathVariable PostId postId ,@AuthenticationPrincipal UserId userId) {
     PostDetailResponse postDetailResponse = postService.findPostById(postId);
       return ResponseEntity.ok(
