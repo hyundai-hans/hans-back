@@ -3,20 +3,28 @@ package com.handsome.mall.service;
 import com.handsome.mall.dto.CreatePostDto;
 import com.handsome.mall.dto.FindPostResponse;
 import com.handsome.mall.dto.UpdatePostDto;
+import com.handsome.mall.entity.primary.Member;
 import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.entity.primary.PostImg;
 import com.handsome.mall.entity.primary.PostTag;
 import com.handsome.mall.entity.primary.Product;
 import com.handsome.mall.exception.PostException;
 import com.handsome.mall.exception.ProductException;
+import com.handsome.mall.exception.UserException;
 import com.handsome.mall.mapper.PostImgMapper;
 import com.handsome.mall.mapper.PostMapper;
 import com.handsome.mall.mapper.TagMapper;
+import com.handsome.mall.repository.primary.MemberRepository;
+import com.handsome.mall.repository.primary.PostImgRepository;
+import com.handsome.mall.repository.primary.PostLikeRepository;
 import com.handsome.mall.repository.primary.PostRepository;
 import com.handsome.mall.repository.primary.ProductRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,23 +32,42 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class HansSnsPostService implements PostService<Long, Long> {
 
+  private final PostImgRepository postImgRepository;
   private final ProductRepository productRepository;
   private final PostRepository postRepository;
+  private final MemberRepository memberRepository;
 
+  @Transactional("primaryTransactionManager")
   @Override
   public void createPost(Long userId, CreatePostDto createPostDto) {
     Product product = findProduct(createPostDto.getProductName());
+    Member member = getMember(userId);
     List<String> tagBodyList = createPostDto.getTagList();
     List<String> postImgList = createPostDto.getImgUrl();
 
-    List<PostTag> postTagList = TagMapper.INSTANCE.mapToPostTags(tagBodyList);
     List<PostImg> postImgEntityList = PostImgMapper.INSTANCE.mapImgUrlsToPostImages(postImgList);
+    List<PostTag> postTagList = TagMapper.INSTANCE.mapToPostTags(tagBodyList);
 
-    Post post = PostMapper.INSTANCE.createPostDtoToPost(createPostDto, product, postTagList,
-        postImgEntityList);
+    Post post = PostMapper.INSTANCE.createPostDtoToPost(createPostDto, product, postTagList,member,postImgEntityList);
+    setParentHelper(postImgEntityList,postTagList,post);
 
+    postImgRepository.saveAll(postImgEntityList);
     postRepository.save(post);
+
   }
+
+  private void setParentHelper(List<PostImg> postImgList, List<PostTag> postTagList, Post post){
+    for(PostImg img : postImgList){
+      img.setPost(post);
+    }
+
+    for(PostTag tag : postTagList){
+      tag.setPost(post);
+    }
+  }
+
+
+
 
   @Override
   public void deletePost(Long userId, Long postId) {
@@ -51,17 +78,23 @@ public class HansSnsPostService implements PostService<Long, Long> {
   /**
    * *
    * @thumbNailImgUrl Optional.get() won't be thrown an exception there is thumbnail img essentially
-   * @return
+   *
    */
-  @Transactional
+  @Transactional("primaryTransactionManager")
   @Override
-  public List<FindPostResponse> findPostByTitle(String title) {
-    List<Post> postList = postRepository.findByTitleLike(title);
-    String thumbNailImgUrl = postList.get(0).getPostImages().stream().filter(
-        PostImg::getIsThumbnail).findFirst().get().getImgUrl();
-    return PostMapper.INSTANCE.postsToFindPostResponses(postList,thumbNailImgUrl);
-  }
+    public List<FindPostResponse> findPost(String title,Pageable pageable) {
 
+    Page<Post> postPage = postRepository.findByTitleContainingOrderByLikes(title, pageable);
+
+        List<Post> postList = postPage.getContent();
+
+        String thumbNailImgUrl = postList.isEmpty() ? null : postList.get(0).getPostImages().stream()
+                .filter(PostImg::getIsThumbnail)
+                .findFirst()
+                .map(PostImg::getImgUrl)
+                .orElse(null);
+        return PostMapper.INSTANCE.postsToFindPostResponses(postList, thumbNailImgUrl);
+    }
 
 
   @Override
@@ -92,6 +125,12 @@ public class HansSnsPostService implements PostService<Long, Long> {
   private Post findPost(Long userId, Long productId) {
     return postRepository.findByMemberIdAndProductId(userId, productId).orElseThrow(() -> {
       throw new PostException("해당 유저가 쓴 글이 아닙니다.");
+    });
+  }
+
+  private Member getMember(Long id) {
+    return memberRepository.findById(id).orElseThrow(() -> {
+      throw new UserException("존재 하지 않는 유저입니다.");
     });
   }
 

@@ -32,6 +32,7 @@ public class HansUserService implements UserService<Long> {
     Member member = UserMapper.INSTANCE.toMember(signUpDto, encodedPassword);
     userDuplicationChecker.emailDuplicationChecker(signUpDto.getEmail());
     userDuplicationChecker.nickNameDuplicationChecker(signUpDto.getNickname());
+
     memberRepository.save(member);
   }
 

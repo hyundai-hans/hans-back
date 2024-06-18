@@ -1,30 +1,29 @@
 package com.handsome.mall.entity.primary;
 
 import com.handsome.mall.entity.BaseEntity;
+import java.sql.Timestamp;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.List;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "post")
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -44,9 +43,6 @@ public class Post extends BaseEntity {
 
     @Column(name = "post_title", length = 50, nullable = false)
     private String title;
-
-    @Column(name = "post_reg_date", nullable = false)
-    private Timestamp regDate;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostImg> postImages;

@@ -1,6 +1,7 @@
 package com.handsome.mall.mapper;
 
 import com.handsome.mall.dto.ImgDto;
+import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.entity.primary.PostImg;
 import java.util.ArrayList;
 import java.util.List;

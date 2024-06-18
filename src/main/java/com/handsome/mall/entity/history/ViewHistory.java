@@ -12,12 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@SuperBuilder
+@Builder
 @Table(name = "view_history")
 @NoArgsConstructor
 @AllArgsConstructor

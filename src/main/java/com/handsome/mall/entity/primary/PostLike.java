@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor
-@SuperBuilder
+@Builder
 public class PostLike extends BaseEntity {
 
         @Id
