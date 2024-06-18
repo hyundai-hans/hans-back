@@ -51,8 +51,6 @@ public interface PostMapper {
     @Mapping(target = "body", source = "createPostDto.body")
     @Mapping(target = "product", source = "product")
     @Mapping(target = "member", source = "member")
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "modifiedAt", ignore = true)
     Post createPostDtoToPost(CreatePostDto createPostDto, Product product,
         List<PostTag> postTagList, Member member,List<PostImg> postImgList);
 

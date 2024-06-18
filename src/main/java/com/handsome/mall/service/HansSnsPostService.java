@@ -32,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class HansSnsPostService implements PostService<Long, Long> {
 
+  private final PostImgRepository postImgRepository;
   private final ProductRepository productRepository;
   private final PostRepository postRepository;
   private final MemberRepository memberRepository;
@@ -48,9 +49,21 @@ public class HansSnsPostService implements PostService<Long, Long> {
     List<PostTag> postTagList = TagMapper.INSTANCE.mapToPostTags(tagBodyList);
 
     Post post = PostMapper.INSTANCE.createPostDtoToPost(createPostDto, product, postTagList,member,postImgEntityList);
+    setParentHelper(postImgEntityList,postTagList,post);
 
+    postImgRepository.saveAll(postImgEntityList);
     postRepository.save(post);
 
+  }
+
+  private void setParentHelper(List<PostImg> postImgList, List<PostTag> postTagList, Post post){
+    for(PostImg img : postImgList){
+      img.setPost(post);
+    }
+
+    for(PostTag tag : postTagList){
+      tag.setPost(post);
+    }
   }
 
 

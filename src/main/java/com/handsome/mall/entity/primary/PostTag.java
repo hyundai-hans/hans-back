@@ -16,12 +16,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "post_tag")
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 @Getter
 @Builder
 public class PostTag extends BaseEntity {

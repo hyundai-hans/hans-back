@@ -16,8 +16,7 @@ public interface PostImgMapper {
     @Mapping(target = "post", ignore = true)
     @Mapping(source = "imgUrl", target = "imgUrl")
     @Mapping(source = "isThumbnail", target = "isThumbnail")
-    @Mapping(source = "post", target = "post")
-    PostImg mapToPostImg(String imgUrl, boolean isThumbnail, Post post);
+    PostImg mapToPostImg(String imgUrl, boolean isThumbnail);
 
     @Named("mapImgUrlsToPostImages")
     default List<PostImg> mapImgUrlsToPostImages(List<String> imgUrls) {

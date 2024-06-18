@@ -36,8 +36,7 @@ public interface UserMapper {
       @Mappings({
         @Mapping(source = "userUpdateDto.profileImg", target = "profileImg"),
         @Mapping(source = "userUpdateDto.nickname", target = "nickname"),
-        @Mapping(source = "userUpdateDto.password", target = "password"),
-              @Mapping(target = "createdAt", source = "member.createdAt")
+        @Mapping(source = "userUpdateDto.password", target = "password")
 
     })
     Member mapUpdateDtoToMember(UserUpdateDto userUpdateDto, Member member);

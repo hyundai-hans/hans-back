@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -23,6 +24,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 public class PostImg extends BaseEntity {
 
@@ -32,7 +34,7 @@ public class PostImg extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade ={CascadeType.PERSIST,CascadeType.MERGE})
-    @JoinColumn(name = "post_id", nullable = false)
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @Column(name = "post_img_url", length = 255, nullable = false)
