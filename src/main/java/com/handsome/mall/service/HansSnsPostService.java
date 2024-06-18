@@ -112,7 +112,7 @@ public class HansSnsPostService implements PostService<Long, Long> {
                 .map(PostImgMapper.INSTANCE::postImgToImgDto)
                 .collect(Collectors.toList());
 
-            PostDetailResponse response = PostMapper.INSTANCE.toPostDetailResponse(post);
+            PostDetailResponse response = PostMapper.INSTANCE.toPostDetailResponseDto(post);
 
 
         return response;
