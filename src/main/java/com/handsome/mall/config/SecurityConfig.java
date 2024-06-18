@@ -89,11 +89,14 @@ public class SecurityConfig {
         antMatchers(HttpMethod.POST, "/users").permitAll().
         antMatchers(HttpMethod.POST, "/users/email").permitAll().
         antMatchers(HttpMethod.POST, "/users/nickname").permitAll().
+        antMatchers(HttpMethod.POST,"/users/products").permitAll().
         antMatchers(HttpMethod.GET, "/posts").permitAll().
         antMatchers(HttpMethod.GET, "/posts/*").permitAll().
         antMatchers(HttpMethod.GET, "/products/*").permitAll().
         antMatchers(HttpMethod.GET, "/tags/*").permitAll().
         antMatchers(HttpMethod.OPTIONS,"/**").permitAll().
+
+
         anyRequest().authenticated();
 
     http.logout().disable();

@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@SuperBuilder
+@Builder
 public class PostTag extends BaseEntity {
 
     @Id

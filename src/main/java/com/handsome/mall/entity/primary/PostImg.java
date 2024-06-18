@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@SuperBuilder
+@Builder
 public class PostImg extends BaseEntity {
 
     @Id
@@ -31,7 +31,7 @@ public class PostImg extends BaseEntity {
     @Column(name = "post_img_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade ={CascadeType.PERSIST,CascadeType.MERGE})
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 

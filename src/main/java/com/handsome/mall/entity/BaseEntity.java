@@ -14,7 +14,6 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @Getter
-@SuperBuilder
 @MappedSuperclass
 @AllArgsConstructor
 @NoArgsConstructor

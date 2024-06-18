@@ -1,11 +1,15 @@
 package com.handsome.mall.entity.primary;
 
 import com.handsome.mall.entity.BaseEntity;
+import com.handsome.mall.valueobject.Role;
 import java.time.LocalDateTime;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,12 +21,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.beans.factory.annotation.Value;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@SuperBuilder
+@Builder
 @Table(name = "member")
 public class Member extends BaseEntity {
 
@@ -43,13 +48,14 @@ public class Member extends BaseEntity {
     @Column(name = "member_profile_img", nullable = false, length = 255)
     private String profileImg;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "member_role", length = 10, nullable = false)
-    private String role;
+    private Role role;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<PostLike> postLikes;
 
 

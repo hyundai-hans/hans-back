@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,9 +22,9 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "product_tag")
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Getter
-@SuperBuilder
-public class ProductTag extends BaseEntity {
+ public class ProductTag extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

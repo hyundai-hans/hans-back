@@ -1,6 +1,7 @@
 package com.handsome.mall.mapper;
 
 import com.handsome.mall.dto.ImgDto;
+import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.entity.primary.PostImg;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,8 @@ public interface PostImgMapper {
     @Mapping(target = "post", ignore = true)
     @Mapping(source = "imgUrl", target = "imgUrl")
     @Mapping(source = "isThumbnail", target = "isThumbnail")
-    PostImg mapToPostImg(String imgUrl, boolean isThumbnail);
+    @Mapping(source = "post", target = "post")
+    PostImg mapToPostImg(String imgUrl, boolean isThumbnail, Post post);
 
     @Named("mapImgUrlsToPostImages")
     default List<PostImg> mapImgUrlsToPostImages(List<String> imgUrls) {

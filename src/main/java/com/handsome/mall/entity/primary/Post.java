@@ -16,13 +16,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Table(name = "post")
-@SuperBuilder
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -42,9 +43,6 @@ public class Post extends BaseEntity {
 
     @Column(name = "post_title", length = 50, nullable = false)
     private String title;
-
-    @Column(name = "post_reg_date", nullable = false)
-    private Timestamp regDate;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<PostImg> postImages;

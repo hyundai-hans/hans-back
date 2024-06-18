@@ -6,6 +6,12 @@ spring:
       -  application-datasource.yml
       -  application-jwt.yml
 
+user:
+  default:
+    profile:
+      img: ${DEFAULT_PROFILE_IMG}
+
+
 logging:
   level:
     root: INFO
