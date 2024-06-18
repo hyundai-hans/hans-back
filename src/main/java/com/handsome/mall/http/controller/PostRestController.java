@@ -6,9 +6,13 @@ import com.handsome.mall.dto.UpdatePostDto;
 import com.handsome.mall.http.message.SuccessResponse;
 import com.handsome.mall.service.PostLikeService;
 import com.handsome.mall.service.PostService;
+import com.handsome.mall.util.PaginationUtil;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,19 +35,22 @@ public class PostRestController<UserId, PostId extends Long> {
   private final PostLikeService<UserId, PostId> postLikeService;
   private final PostService<UserId, PostId> postService;
 
-  
 
+  @GetMapping("/posts")
+  public ResponseEntity<SuccessResponse<List<FindPostResponse>>> findPosts(
+      @RequestParam(required = false) String title,
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size,
+      @RequestParam(defaultValue = "createdAt,desc") String sort) {
 
-  @GetMapping
-  public ResponseEntity<SuccessResponse<List<FindPostResponse>>> searchPost(
-      @RequestParam("title") String title) {
-    List<FindPostResponse> findPostResponseList = postService.findPostByTitle(title);
+    Pageable pageable = PaginationUtil.createPageRequest(page, size, sort);
+
+    List<FindPostResponse> findPostResponseList = postService.findPost(title, pageable);
+
     return ResponseEntity.ok(
-        SuccessResponse.<List<FindPostResponse>>builder().message("타이틀 검색 완료")
-            .status(HttpStatus.OK.toString())
+        SuccessResponse.<List<FindPostResponse>>builder().message("포스트 반환 성공").status(HttpStatus.OK.toString())
             .data(findPostResponseList).build());
   }
-
 
   @PostMapping
   public ResponseEntity<SuccessResponse<Object>> createPost(

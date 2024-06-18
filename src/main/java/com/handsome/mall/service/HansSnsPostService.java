@@ -17,6 +17,9 @@ import com.handsome.mall.repository.primary.ProductRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,15 +56,20 @@ public class HansSnsPostService implements PostService<Long, Long> {
    * @thumbNailImgUrl Optional.get() won't be thrown an exception there is thumbnail img essentially
    *
    */
-  @Transactional
-  @Override
-  public List<FindPostResponse> findPostByTitle(String title) {
-    List<Post> postList = postRepository.findByTitleLike(title);
-    String thumbNailImgUrl = postList.get(0).getPostImages().stream().filter(
-        PostImg::getIsThumbnail).findFirst().get().getImgUrl();
-    return PostMapper.INSTANCE.postsToFindPostResponses(postList,thumbNailImgUrl);
-  }
+    @Transactional
+    @Override
+    public List<FindPostResponse> findPost(String title,Pageable pageable) {
+        Page<Post> postPage = postRepository.findByTitleContainingOrderByLikes(title, pageable);
 
+        List<Post> postList = postPage.getContent();
+
+        String thumbNailImgUrl = postList.isEmpty() ? null : postList.get(0).getPostImages().stream()
+                .filter(PostImg::getIsThumbnail)
+                .findFirst()
+                .map(PostImg::getImgUrl)
+                .orElse(null);
+        return PostMapper.INSTANCE.postsToFindPostResponses(postList, thumbNailImgUrl);
+    }
 
 
   @Override
