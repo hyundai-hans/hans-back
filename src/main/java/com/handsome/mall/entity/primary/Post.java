@@ -54,6 +54,6 @@ public class Post extends BaseEntity {
     private List<PostLike> postLikes;
 
     @JoinColumn
-    @OneToOne
+    @ManyToOne
     private Product product;
 }

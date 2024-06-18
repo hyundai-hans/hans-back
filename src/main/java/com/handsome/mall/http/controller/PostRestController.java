@@ -36,7 +36,7 @@ public class PostRestController<UserId, PostId extends Long> {
   private final PostService<UserId, PostId> postService;
 
 
-  @GetMapping("/posts")
+  @GetMapping
   public ResponseEntity<SuccessResponse<List<FindPostResponse>>> findPosts(
       @RequestParam(required = false) String title,
       @RequestParam(defaultValue = "0") int page,

@@ -51,7 +51,7 @@ public class Product extends BaseEntity {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductTag> productTags;
 
-    @OneToOne(mappedBy = "product")
-    private Post post;
+    @OneToMany(mappedBy = "product")
+    private List<Post> postList;
 
 }
