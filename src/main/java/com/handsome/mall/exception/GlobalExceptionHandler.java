@@ -10,6 +10,7 @@ import javax.security.auth.message.AuthException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.support.MethodArgumentTypeMismatchException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -55,6 +56,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ProductException.class)
     public ResponseEntity<Map<String, List<String>>> productException(
+      ProductException ex) {
+    List<String> errors = Collections.singletonList(ex.getMessage());
+    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+  }
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Map<String, List<String>>> methodArgumentException(
       ProductException ex) {
     List<String> errors = Collections.singletonList(ex.getMessage());
     return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.UNAUTHORIZED);

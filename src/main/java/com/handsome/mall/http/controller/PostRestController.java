@@ -10,9 +10,7 @@ import com.handsome.mall.util.PaginationUtil;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -41,9 +39,11 @@ public class PostRestController<UserId, PostId extends Long> {
       @RequestParam(required = false) String title,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size,
-      @RequestParam(defaultValue = "createdAt,desc") String sort) {
+      @RequestParam(defaultValue = "created_at") String sort,
+      @RequestParam(defaultValue = "desc") String by
+  ) {
 
-    Pageable pageable = PaginationUtil.createPageRequest(page, size, sort);
+    Pageable pageable = PaginationUtil.createPageRequest(page, size, sort, by);
 
     List<FindPostResponse> findPostResponseList = postService.findPost(title, pageable);
 

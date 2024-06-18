@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
   public Optional<Post> findByMemberIdAndProductId(Long memberId, Long productId);
 
-    @Query("SELECT p FROM Post p WHERE (:title is null or p.title LIKE %:title%) ORDER BY p.postLikes.size DESC")
+    @Query("SELECT p FROM Post p WHERE (:title is null or p.title LIKE %:title%)")
   Page<Post> findByTitleContainingOrderByLikes(@Param("title") String title, Pageable pageable);
 
 }
