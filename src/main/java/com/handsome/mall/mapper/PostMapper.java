@@ -3,6 +3,7 @@ package com.handsome.mall.mapper;
 import com.handsome.mall.dto.CreatePostDto;
 import com.handsome.mall.dto.FindPostResponse;
 import com.handsome.mall.dto.PostDto;
+import com.handsome.mall.dto.response.PostDetailResponse;
 import com.handsome.mall.entity.primary.Member;
 import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.entity.primary.PostImg;
@@ -67,5 +68,22 @@ public interface PostMapper {
                     .map(post -> postToFindPostResponse(post, thumbNailUrl))
                     .collect(Collectors.toList());
     }
+
+
+    @Mapping(source = "member.profileImg", target = "profileImg")
+    @Mapping(source = "member.nickname", target = "nickname")
+    @Mapping(source = "postLikes.size", target = "likesCount")
+    @Mapping(source = "createdAt", target = "createdAt")
+    PostDetailResponse toPostDetailResponse(Post post);
+
+
+    @Mapping(source = "member.profileImg", target = "profileImg")
+    @Mapping(source = "member.nickname", target = "nickname")
+    @Mapping(source = "postLikes.size", target = "likesCount")
+    @Mapping(source = "createdAt", target = "createdAt")
+    @Mapping(source = "postImages", target = "imgList")
+    @Mapping(source = "postTags", target = "tagList")
+    @Mapping(source = "product", target = "product")
+    PostDetailResponse toPostDetailResponseDto(Post post);
 }
 

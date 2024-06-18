@@ -3,6 +3,7 @@ package com.handsome.mall.service;
 import com.handsome.mall.dto.CreatePostDto;
 import com.handsome.mall.dto.FindPostResponse;
 import com.handsome.mall.dto.UpdatePostDto;
+import com.handsome.mall.dto.response.PostDetailResponse;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 public interface PostService<UserId extends Object, PostId extends Number> {
   public void createPost(UserId userId, CreatePostDto createPostDto);
   void deletePost(UserId userId, PostId postId);
-  List<FindPostResponse> findPost(String title, Pageable pageable);
   void updatePost(UserId userId, UpdatePostDto updatePostDto);
+  List<FindPostResponse> findPostByTitle(String title, Pageable pageable);
+  PostDetailResponse findPostById(PostId postId);
 }

@@ -17,6 +17,9 @@ public interface TagMapper {
   @Mapping(source = "tagBody", target = "tagBody")
   PostTag mapToPostTag(String tagBody);
 
+  TagDto toTagDTO(PostTag postTag);
+
+
   @Named("mapToPostTags")
   default List<PostTag> mapToPostTags(List<String> tagBodies) {
     return tagBodies.stream()

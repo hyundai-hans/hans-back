@@ -3,6 +3,7 @@ package com.handsome.mall.http.controller;
 import com.handsome.mall.dto.CreatePostDto;
 import com.handsome.mall.dto.FindPostResponse;
 import com.handsome.mall.dto.UpdatePostDto;
+import com.handsome.mall.dto.response.PostDetailResponse;
 import com.handsome.mall.http.message.SuccessResponse;
 import com.handsome.mall.service.PostLikeService;
 import com.handsome.mall.service.PostService;
@@ -45,7 +46,7 @@ public class PostRestController<UserId, PostId extends Long> {
 
     Pageable pageable = PaginationUtil.createPageRequest(page, size, sort, by);
 
-    List<FindPostResponse> findPostResponseList = postService.findPost(title, pageable);
+    List<FindPostResponse> findPostResponseList = postService.findPostByTitle(title, pageable);
 
     return ResponseEntity.ok(
         SuccessResponse.<List<FindPostResponse>>builder().message("포스트 반환 성공").status(HttpStatus.OK.toString())
@@ -59,6 +60,14 @@ public class PostRestController<UserId, PostId extends Long> {
     return ResponseEntity.ok(
         SuccessResponse.builder().message("게시글 작성 성공").status(HttpStatus.OK.toString()).build());
   }
+
+    @GetMapping
+  public ResponseEntity<SuccessResponse<PostDetailResponse>> findPost(@PathVariable PostId postId ,@AuthenticationPrincipal UserId userId) {
+    PostDetailResponse postDetailResponse = postService.findPostById(postId);
+      return ResponseEntity.ok(
+        SuccessResponse.<PostDetailResponse>builder().message("게시글 조회 성공").data(postDetailResponse).status(HttpStatus.OK.toString()).build());
+  }
+
 
   @PutMapping
   public ResponseEntity<SuccessResponse<Object>> updatePost(

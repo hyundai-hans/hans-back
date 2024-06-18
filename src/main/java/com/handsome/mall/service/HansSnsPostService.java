@@ -2,7 +2,11 @@ package com.handsome.mall.service;
 
 import com.handsome.mall.dto.CreatePostDto;
 import com.handsome.mall.dto.FindPostResponse;
+import com.handsome.mall.dto.ImgDto;
+import com.handsome.mall.dto.ProductDto;
+import com.handsome.mall.dto.TagDto;
 import com.handsome.mall.dto.UpdatePostDto;
+import com.handsome.mall.dto.response.PostDetailResponse;
 import com.handsome.mall.entity.primary.Member;
 import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.entity.primary.PostImg;
@@ -82,7 +86,7 @@ public class HansSnsPostService implements PostService<Long, Long> {
    */
   @Transactional("primaryTransactionManager")
   @Override
-    public List<FindPostResponse> findPost(String title,Pageable pageable) {
+    public List<FindPostResponse> findPostByTitle(String title,Pageable pageable) {
 
     Page<Post> postPage = postRepository.findByTitleContainingOrderByLikes(title, pageable);
 
@@ -94,6 +98,24 @@ public class HansSnsPostService implements PostService<Long, Long> {
                 .map(PostImg::getImgUrl)
                 .orElse(null);
         return PostMapper.INSTANCE.postsToFindPostResponses(postList, thumbNailImgUrl);
+    }
+
+  @Override
+  public PostDetailResponse findPostById(Long postId ) {
+             Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+
+        List<TagDto> tagDtoList = post.getPostTags().stream()
+                .map(TagMapper.INSTANCE::postTagToTagDto)
+                .collect(Collectors.toList());
+
+        List<ImgDto> imgDtoList = post.getPostImages().stream()
+                .map(PostImgMapper.INSTANCE::postImgToImgDto)
+                .collect(Collectors.toList());
+
+            PostDetailResponse response = PostMapper.INSTANCE.toPostDetailResponse(post);
+
+
+        return response;
     }
 
 
