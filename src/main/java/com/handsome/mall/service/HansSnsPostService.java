@@ -51,7 +51,7 @@ public class HansSnsPostService implements PostService<Long, Long> {
   /**
    * *
    * @thumbNailImgUrl Optional.get() won't be thrown an exception there is thumbnail img essentially
-   * @return
+   *
    */
   @Transactional
   @Override
