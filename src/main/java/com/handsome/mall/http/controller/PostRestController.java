@@ -38,6 +38,7 @@ public class PostRestController<UserId, PostId extends Long> {
   @GetMapping
   public ResponseEntity<SuccessResponse<List<FindPostResponse>>> findPosts(
       @RequestParam(required = false) String title,
+      @RequestParam(required = false) String tag,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size,
       @RequestParam(defaultValue = "created_at") String sort,
@@ -46,7 +47,7 @@ public class PostRestController<UserId, PostId extends Long> {
 
     Pageable pageable = PaginationUtil.createPageRequest(page, size, sort, by);
 
-    List<FindPostResponse> findPostResponseList = postService.findPostByTitle(title, pageable);
+    List<FindPostResponse> findPostResponseList = postService.findPostByTitle(title,tag, pageable);
 
     return ResponseEntity.ok(
         SuccessResponse.<List<FindPostResponse>>builder().message("포스트 반환 성공").status(HttpStatus.OK.toString())

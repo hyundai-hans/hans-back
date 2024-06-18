@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
    Optional<Post> findByMemberIdAndProductId(Long memberId, Long productId);
 
-    @Query("SELECT p FROM Post p WHERE (:title is null or p.title LIKE %:title%)")
-  Page<Post> findByTitleContainingOrderByLikes(@Param("title") String title, Pageable pageable);
+ @Query("SELECT p FROM Post p LEFT JOIN FETCH p.postTags pt WHERE (:title IS NULL OR p.title LIKE %:title%) AND (:tagBody IS NULL OR pt.tagBody = :tagBody)")
+    Page<Post> findByTitleContainingAndTagBody(@Param("title") String title, @Param("tagBody") String tagBody, Pageable pageable);
 
 }

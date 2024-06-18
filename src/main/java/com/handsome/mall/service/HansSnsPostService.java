@@ -26,13 +26,11 @@ import com.handsome.mall.repository.primary.ProductRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor
 @Service
@@ -88,9 +86,9 @@ public class HansSnsPostService implements PostService<Long, Long> {
    */
   @Transactional("primaryTransactionManager")
   @Override
-    public List<FindPostResponse> findPostByTitle(String title,Pageable pageable) {
+    public List<FindPostResponse> findPostByTitle(String title, String tagName,Pageable pageable) {
 
-    Page<Post> postPage = postRepository.findByTitleContainingOrderByLikes(title, pageable);
+    Page<Post> postPage = postRepository.findByTitleContainingAndTagBody(title,tagName, pageable);
 
         List<Post> postList = postPage.getContent();
 

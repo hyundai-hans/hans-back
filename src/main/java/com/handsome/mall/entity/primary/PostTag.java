@@ -23,8 +23,8 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "post_tag")
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
+@Setter
 @Builder
 public class PostTag extends BaseEntity {
 
