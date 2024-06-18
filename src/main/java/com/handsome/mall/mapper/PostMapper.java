@@ -2,7 +2,10 @@ package com.handsome.mall.mapper;
 
 import com.handsome.mall.dto.CreatePostDto;
 import com.handsome.mall.dto.FindPostResponse;
+import com.handsome.mall.dto.ImgDto;
 import com.handsome.mall.dto.PostDto;
+import com.handsome.mall.dto.ProductDto;
+import com.handsome.mall.dto.TagDto;
 import com.handsome.mall.dto.response.PostDetailResponse;
 import com.handsome.mall.entity.primary.Member;
 import com.handsome.mall.entity.primary.Post;
@@ -73,20 +76,17 @@ public interface PostMapper {
 
 
 
-    @Mapping(source = "member.profileImg", target = "profileImg")
-    @Mapping(source = "member.nickname", target = "nickname")
-    @Mapping(source = "createdAt", target = "createdAt")
     @Mapping(target = "likesCount", expression = "java(calculateLikesCount(post))")
-    @Mapping(source = "postImages", target = "imgList")
-    @Mapping(source = "postTags", target = "tagList")
-    @Mapping(source = "product", target = "product")
-    PostDetailResponse toPostDetailResponseDto(Post post);
-
+    @Mapping(source = "tagDtoList", target = "tagList")
+    @Mapping(source = "imgDtoList", target = "imgList")
+    @Mapping(source = "productDto", target = "product")
+    PostDetailResponse toPostDetailResponseDto(Post post, ProductDto productDto, List<TagDto> tagDtoList, List<ImgDto> imgDtoList);
     default Long calculateLikesCount(Post post) {
         return post.getPostLikes().stream()
                 .filter(PostLike::getIsLiked)
                 .count();
     }
+
 }
 
 

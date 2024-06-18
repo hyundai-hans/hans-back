@@ -17,6 +17,7 @@ import com.handsome.mall.exception.ProductException;
 import com.handsome.mall.exception.UserException;
 import com.handsome.mall.mapper.PostImgMapper;
 import com.handsome.mall.mapper.PostMapper;
+import com.handsome.mall.mapper.ProductMapper;
 import com.handsome.mall.mapper.TagMapper;
 import com.handsome.mall.repository.primary.MemberRepository;
 import com.handsome.mall.repository.primary.PostImgRepository;
@@ -100,28 +101,30 @@ public class HansSnsPostService implements PostService<Long, Long> {
         return PostMapper.INSTANCE.postsToFindPostResponses(postList, thumbNailImgUrl);
     }
 
+  @Transactional("primaryTransactionManager")
   @Override
   public PostDetailResponse findPostById(Long postId ) {
-             Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
 
-        List<TagDto> tagDtoList = post.getPostTags().stream()
-                .map(TagMapper.INSTANCE::postTagToTagDto)
-                .collect(Collectors.toList());
+    Post post = postRepository.findById(postId)
+        .orElseThrow(() -> new PostException("존재하지 않는 상품입니다."));
 
-        List<ImgDto> imgDtoList = post.getPostImages().stream()
-                .map(PostImgMapper.INSTANCE::postImgToImgDto)
-                .collect(Collectors.toList());
+    List<TagDto> tagDtoList = post.getPostTags().stream()
+        .map(TagMapper.INSTANCE::postTagToTagDto)
+        .collect(Collectors.toList());
 
-            PostDetailResponse response = PostMapper.INSTANCE.toPostDetailResponseDto(post);
+    List<ImgDto> imgDtoList = post.getPostImages().stream()
+        .map(PostImgMapper.INSTANCE::postImgToImgDto)
+        .collect(Collectors.toList());
 
+    ProductDto productDto = ProductMapper.INSTANCE.toProductDTO(post.getProduct());
 
-        return response;
-    }
+    return PostMapper.INSTANCE.toPostDetailResponseDto(post, productDto, tagDtoList,
+        imgDtoList);
+  }
 
 
   @Override
   public void updatePost(Long userId, UpdatePostDto updatePostDto) {
-    Post post = findPost(userId, updatePostDto.getPostId());
 
     String title = updatePostDto.getTitle();
     String body = updatePostDto.getBody();
