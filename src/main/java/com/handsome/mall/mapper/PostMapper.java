@@ -77,6 +77,8 @@ public interface PostMapper {
 
 
     @Mapping(target = "likesCount", expression = "java(calculateLikesCount(post))")
+    @Mapping(source = "post.member.nickname", target = "nickname")
+    @Mapping(source = "post.member.profileImg", target = "profileImg")
     @Mapping(source = "tagDtoList", target = "tagList")
     @Mapping(source = "imgDtoList", target = "imgList")
     @Mapping(source = "productDto", target = "product")
