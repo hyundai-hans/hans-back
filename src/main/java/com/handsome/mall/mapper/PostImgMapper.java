@@ -24,7 +24,7 @@ public interface PostImgMapper {
         List<PostImg> postImages = new ArrayList<>();
         for (int i = 0; i < imgUrls.size(); i++) {
             String url = imgUrls.get(i);
-            boolean isThumbnail = (i == 0); // First image is the thumbnail
+            boolean isThumbnail = (i == 0);
             postImages.add(mapToPostImg(url, isThumbnail));
         }
         return postImages;
@@ -32,9 +32,14 @@ public interface PostImgMapper {
 
 
 
-      @Mapping(source = "imgDto.imgUrl", target = "imgUrl")
-      @Mapping(source = "imgDto.isThumbnail", target = "isThumbnail")
+     @Mapping(source = "imgDto.imgUrl", target = "imgUrl")
+    @Mapping(source = "imgDto.isThumbnail", target = "isThumbnail", qualifiedByName = "toBoolean")
     PostImg imgDtoToPostImg(ImgDto imgDto, PostImg postImg);
+
+    @Named("toBoolean")
+    default boolean toBoolean(Boolean value) {
+        return value != null && value;
+    }
 
     @Mapping(source = "id", target = "imgId")
     ImgDto postImgToImgDto(PostImg postImg);

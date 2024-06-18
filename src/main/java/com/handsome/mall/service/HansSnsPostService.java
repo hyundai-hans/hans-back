@@ -21,19 +21,18 @@ import com.handsome.mall.mapper.ProductMapper;
 import com.handsome.mall.mapper.TagMapper;
 import com.handsome.mall.repository.primary.MemberRepository;
 import com.handsome.mall.repository.primary.PostImgRepository;
-import com.handsome.mall.repository.primary.PostLikeRepository;
 import com.handsome.mall.repository.primary.PostRepository;
 import com.handsome.mall.repository.primary.ProductRepository;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @RequiredArgsConstructor
 @Service
@@ -124,42 +123,40 @@ public class HansSnsPostService implements PostService<Long, Long> {
         imgDtoList);
   }
 
-@Transactional("primaryTransactionManager")
+  @Transactional("primaryTransactionManager")
   @Override
   public void updatePost(Long userId, UpdatePostDto updatePostDto) {
-    Post post = findPost(userId,updatePostDto.getPostId());
-
-
+    Post post = findPost(userId, updatePostDto.getPostId());
 
     List<PostTag> updatedTagList = post.getPostTags().stream()
-            .map(postTag -> {
-                Optional<TagDto> matchingTagDto = updatePostDto.getTagList().stream()
-                        .filter(tagDto -> tagDto.getTagId().equals(postTag.getId()))
-                        .findFirst();
-                if (matchingTagDto.isPresent()) {
-                    return PostMapper.INSTANCE.updateThroughTagDto(matchingTagDto.get(), postTag);
-                }
-                return postTag;
-            })
+        .map(postTag -> {
+          Optional<TagDto> matchingTagDto = updatePostDto.getTagList().stream()
+              .filter(tagDto -> tagDto.getTagId().equals(postTag.getId()))
+              .findFirst();
+          if (matchingTagDto.isPresent()) {
+            return PostMapper.INSTANCE.updateThroughTagDto(matchingTagDto.get(), postTag);
+          }
+          return postTag;
+        })
             .collect(Collectors.toList());
-
-
 
     List<PostImg> updatedPostImgList = post.getPostImages().stream()
-            .map(postImg -> {
-                Optional<ImgDto> matchingImgDto = updatePostDto.getImgList().stream()
-                        .filter(imgDto -> imgDto.getImgId().equals(postImg.getId()))
-                        .findFirst();
-                if (matchingImgDto.isPresent()) {
-                    return PostImgMapper.INSTANCE.imgDtoToPostImg(matchingImgDto.get(), postImg);
-                }
-                return postImg;
-            })
-            .collect(Collectors.toList());
+        .map(postImg -> {
+          Optional<ImgDto> matchingImgDto = updatePostDto.getImgList().stream()
+              .filter(imgDto -> imgDto.getImgId().equals(postImg.getId()))
+              .findFirst();
+          if (matchingImgDto.isPresent()) {
+            return PostImgMapper.INSTANCE.imgDtoToPostImg(matchingImgDto.get(), postImg);
+          }
+          return postImg;
+        })
+        .collect(Collectors.toList());
 
-   Post updatedPost =  PostMapper.INSTANCE.updatePostDtoToPost(updatePostDto,post,updatedTagList,updatedPostImgList);
-   postRepository.save(updatedPost);
-
+    post.setPostImages(updatedPostImgList);
+    post.setPostTags(updatedTagList);
+    post.setBody(updatePostDto.getBody());
+    post.setTitle(updatePostDto.getTitle());
+    postRepository.save(post);
   }
 
   private Product findProduct(String productName) {

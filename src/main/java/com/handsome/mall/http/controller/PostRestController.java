@@ -74,7 +74,7 @@ public class PostRestController<UserId, PostId extends Long> {
       @Valid @RequestBody UpdatePostDto updatePostDto, @AuthenticationPrincipal UserId userId) {
     postService.updatePost(userId, updatePostDto);
     return ResponseEntity.ok(
-        SuccessResponse.builder().message("게시글 작성 성공").status(HttpStatus.OK.toString()).build());
+        SuccessResponse.builder().message("게시글 업데이트 성공").status(HttpStatus.OK.toString()).build());
   }
 
 
@@ -83,7 +83,7 @@ public class PostRestController<UserId, PostId extends Long> {
       @AuthenticationPrincipal UserId userId) {
     postService.deletePost(userId, postId);
     return ResponseEntity.ok(
-        SuccessResponse.builder().message("게시글 작성 성공").status(HttpStatus.OK.toString()).build());
+        SuccessResponse.builder().message("게시글 삭제 성공").status(HttpStatus.OK.toString()).build());
   }
   @PatchMapping("/{postId}")
   public ResponseEntity<SuccessResponse<Object>> likePost(@PathVariable PostId postId,

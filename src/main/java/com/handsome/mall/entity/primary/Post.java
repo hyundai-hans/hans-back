@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "post")
@@ -24,8 +25,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class
-Post extends BaseEntity {
+@Setter
+public class Post extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +53,6 @@ Post extends BaseEntity {
     private List<PostLike> postLikes;
 
     @JoinColumn
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Product product;
 }

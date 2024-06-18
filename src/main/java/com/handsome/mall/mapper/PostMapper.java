@@ -32,6 +32,8 @@ public interface PostMapper {
     @Mapping(target = "thumbnailImgUrl", expression = "java(findThumbnailImgUrl(post))")
     PostDto toPostDto(Post post);
 
+
+
     default String findThumbnailImgUrl(Post post) {
         return post.getPostImages().stream()
             .filter(PostImg::getIsThumbnail)
@@ -41,13 +43,9 @@ public interface PostMapper {
     }
 
 
-    @Mapping(target = "id", source = "updatePostDto.postId")
-    @Mapping(target = "title", source = "updatePostDto.title")
-    @Mapping(target = "body", source = "updatePostDto.body")
-    @Mapping(target = "postTags", source = "postTagList")
-    @Mapping(target = "postImages", source = "postImgList")
-    Post updatePostDtoToPost(UpdatePostDto updatePostDto, Post post, List<PostTag> postTagList,
-        List<PostImg> postImgList);
+    @Mapping(source = "updatePostDto.title", target = "title")
+    @Mapping(source = "updatePostDto.body", target = "body")
+    Post updatePostDtoToPost(UpdatePostDto updatePostDto, Post post);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "postTags", source = "postTagList")
