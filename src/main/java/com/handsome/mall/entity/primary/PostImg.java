@@ -46,3 +46,4 @@ public class PostImg extends BaseEntity {
     private Boolean isThumbnail;
 
 }
+

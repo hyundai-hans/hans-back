@@ -84,20 +84,29 @@ public class HansSnsPostService implements PostService<Long, Long> {
    * @thumbNailImgUrl Optional.get() won't be thrown an exception there is thumbnail img essentially
    *
    */
-  @Transactional("primaryTransactionManager")
-  @Override
-    public List<FindPostResponse> findPostByTitle(String title, String tagName,Pageable pageable) {
 
-    Page<Post> postPage = postRepository.findByTitleContainingAndTagBody(title,tagName, pageable);
-
+    @Transactional("primaryTransactionManager")
+    @Override
+    public List<FindPostResponse> findPostByTitle(String title, String tagName, Pageable pageable) {
+        Page<Post> postPage = postRepository.findByTitleContainingAndTagBody(title, tagName, pageable);
         List<Post> postList = postPage.getContent();
+        return postList.stream().map(this::convertToFindPostResponse).collect(Collectors.toList());
+    }
 
-        String thumbNailImgUrl = postList.isEmpty() ? null : postList.get(0).getPostImages().stream()
-                .filter(PostImg::getIsThumbnail)
-                .findFirst()
-                .map(PostImg::getImgUrl)
-                .orElse(null);
-        return PostMapper.INSTANCE.postsToFindPostResponses(postList, thumbNailImgUrl);
+    private FindPostResponse convertToFindPostResponse(Post post) {
+        String thumbnailImgUrl = post.getPostImages().stream()
+            .filter(PostImg::getIsThumbnail)
+            .map(PostImg::getImgUrl)
+            .findFirst()
+            .orElse(null);
+
+        return new FindPostResponse(
+            post.getId(),
+            post.getTitle(),
+            post.getMember().getNickname(),
+            thumbnailImgUrl,
+            post.getCreatedAt()
+        );
     }
 
   @Transactional("primaryTransactionManager")

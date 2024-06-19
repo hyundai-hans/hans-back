@@ -65,7 +65,8 @@ public interface PostMapper {
     FindPostResponse postToFindPostResponse(Post post, String thumbNailUrl);
 
 
-    default List<FindPostResponse> postsToFindPostResponses(List<Post> posts, @Context String thumbNailUrl) {
+    default List<FindPostResponse
+        > postsToFindPostResponses(List<Post> posts, @Context String thumbNailUrl) {
         return posts.stream()
                     .map(post -> postToFindPostResponse(post, thumbNailUrl))
                     .collect(Collectors.toList());
