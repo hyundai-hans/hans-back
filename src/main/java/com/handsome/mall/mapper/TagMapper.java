@@ -15,13 +15,12 @@ public interface TagMapper {
 
   TagMapper INSTANCE = Mappers.getMapper(TagMapper.class);
 
-  @Mapping(target = "post", ignore = true)
-  @Mapping(source = "body", target = "tagBody")
-  PostTag mapToPostTagFromDto(TagDto tagDto);
+  @Mapping(target = "id", ignore=true)
+  @Mapping(source = "post", target = "post")
+  @Mapping(source = "tagDto.body", target = "tagBody")
+  PostTag mapToPostTagFromDto(TagDto tagDto,Post post);
 
   TagDto toTagDTO(PostTag postTag);
-
-
 
 
   @Named("mapToPostTags")
@@ -38,12 +37,9 @@ public interface TagMapper {
     return postTag;
   }
 
-
-  @Mapping(source = "tagDto.tagId", target = "id")
   @Mapping(source = "tagDto.body", target = "tagBody")
   PostTag updateThroughTagDto(TagDto tagDto, Post post);
 
-  @Mapping(source = "id", target = "tagId")
   @Mapping(source = "tagBody", target = "body")
   TagDto postTagToTagDto(PostTag postTag);
 }

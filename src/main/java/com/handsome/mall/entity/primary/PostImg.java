@@ -34,7 +34,8 @@ public class PostImg extends BaseEntity {
     @Column(name = "post_img_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade ={CascadeType.PERSIST,CascadeType.MERGE})
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade ={CascadeType.PERSIST,CascadeType.MERGE})
     @JoinColumn(name = "post_id")
     private Post post;
 

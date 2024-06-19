@@ -24,9 +24,6 @@ import com.handsome.mall.repository.primary.PostImgRepository;
 import com.handsome.mall.repository.primary.PostRepository;
 import com.handsome.mall.repository.primary.ProductRepository;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -134,25 +131,26 @@ public class HansSnsPostService implements PostService<Long, Long> {
   @Transactional("primaryTransactionManager")
   @Override
   public void updatePost(Long userId, UpdatePostDto updatePostDto) {
-    Post post = findPost(userId, updatePostDto.getPostId());
 
+    Post post = findPost(userId, updatePostDto.getPostId());
 
     List<ImgDto> imgDtoList = updatePostDto.getImgList();
     List<TagDto> tagDtoList = updatePostDto.getTagList();
 
-    List<PostTag> updatedTagList = bindUpdatedPostTagAlreadyExistFromDto(tagDtoList, post);
-    List<PostImg> updatedPostImgList = bindUpdatedPostImageAlreadyExistFromDto(imgDtoList, post);
+    List<PostTag> updatedTagList = getPostTagFromDto(tagDtoList, post);
+    List<PostImg> updatedPostImgList = getPostImgFromDto(imgDtoList, post);
 
-    List<PostTag> newPostTagList = bindNewPostTagsFromDto(tagDtoList, post);
-    List<PostImg> newPostImgList = bindNewPostImagesFromDto(imgDtoList, post);
 
     checkThumbnailValidation(updatedPostImgList);
 
-    updatedTagList.addAll(newPostTagList);
-    updatedPostImgList.addAll(newPostImgList);
 
-    post.setPostImages(updatedPostImgList);
-    post.setPostTags(updatedTagList);
+
+    post.getPostImages().clear();
+    post.getPostImages().addAll(updatedPostImgList);
+
+    post.getPostTags().clear();
+    post.getPostTags().addAll(updatedTagList);
+    
     post.setBody(updatePostDto.getBody());
     post.setTitle(updatePostDto.getTitle());
 
@@ -166,51 +164,20 @@ public class HansSnsPostService implements PostService<Long, Long> {
     }
   }
 
-  private List<PostTag> bindUpdatedPostTagAlreadyExistFromDto(List<TagDto> tagDtoList, Post post) {
-    Map<Long, TagDto> tagDtoMap = tagDtoList.stream()
-        .filter(tagDto -> tagDto.getTagId() != null)
-        .collect(Collectors.toMap(TagDto::getTagId, Function.identity()));
 
-    return post.getPostTags().stream()
-        .filter(postTag -> tagDtoMap.containsKey(postTag.getId()))
-        .map(postTag -> {
-          TagDto idMatchedTagDto = tagDtoMap.get(postTag.getId());
-          return TagMapper.INSTANCE.updateThroughTagDto(idMatchedTagDto,post);
-        })
-        .collect(Collectors.toList());
-  }
-
-  private List<PostImg> bindUpdatedPostImageAlreadyExistFromDto(List<ImgDto> imgDtoList,
-      Post post) {
-    Map<Long, ImgDto> imgDtoMap = imgDtoList.stream()
-        .filter(imgDto -> imgDto.getImgId() != null)
-        .collect(Collectors.toMap(ImgDto::getImgId, Function.identity()));
-
-    return post.getPostImages().stream()
-        .filter(postImg -> imgDtoMap.containsKey(postImg.getId()))
-        .map(postImg -> {
-          ImgDto idMatchedImgDto = imgDtoMap.get(postImg.getId());
-        return  PostImgMapper.INSTANCE.imgDtoToPostImg(idMatchedImgDto,post);
-        })
-        .collect(Collectors.toList());
-  }
-
-  private List<PostTag> bindNewPostTagsFromDto(List<TagDto> tagDtoList, Post post) {
+  private List<PostTag> getPostTagFromDto(List<TagDto> tagDtoList, Post post) {
     return tagDtoList.stream()
-        .filter(tagDto -> tagDto.getTagId() == null)
         .map(tagDto -> {
-          PostTag newTag = TagMapper.INSTANCE.mapToPostTagFromDto(tagDto);
-          newTag.setPost(post);
-          return newTag;
+          return TagMapper.INSTANCE.mapToPostTagFromDto(tagDto,post);
         })
         .collect(Collectors.toList());
   }
 
-  private List<PostImg> bindNewPostImagesFromDto(List<ImgDto> imgDtoList, Post post) {
+  private List<PostImg>
+  getPostImgFromDto(List<ImgDto> imgDtoList, Post post) {
     return imgDtoList.stream()
-        .filter(imgDto -> imgDto.getImgId() == null)
         .map(imgDto -> {
-          return PostImgMapper.INSTANCE.imgDtoToPostImg(imgDto, post);
+            return PostImgMapper.INSTANCE.imgDtoToPostImg(imgDto, post);
         })
         .collect(Collectors.toList());
   }

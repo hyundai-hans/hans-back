@@ -30,16 +30,11 @@ public interface PostImgMapper {
         return postImages;
     }
 
-    @Mapping(source = "imgDto.imgId",target = "id" )
-     @Mapping(source = "imgDto.imgUrl", target = "imgUrl")
-    @Mapping(source = "imgDto.isThumbnail", target = "isThumbnail", qualifiedByName = "toBoolean")
+    @Mapping(target= "id", ignore = true)
+    @Mapping(source = "imgDto.imgUrl", target = "imgUrl")
+    @Mapping(source = "imgDto.isThumbnail", target = "isThumbnail")
     PostImg imgDtoToPostImg(ImgDto imgDto,Post post);
 
-    @Named("toBoolean")
-    default boolean toBoolean(Boolean value) {
-        return value != null && value;
-    }
 
-    @Mapping(source = "id", target = "imgId")
     ImgDto postImgToImgDto(PostImg postImg);
 }
