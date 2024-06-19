@@ -11,6 +11,7 @@ import com.handsome.mall.util.PaginationUtil;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 @RestController
-public class PostRestController<UserId, PostId> {
+@Slf4j
+public class PostRestController<UserId, PostId extends Long> {
 
   private final PostLikeService<UserId, PostId> postLikeService;
   private final PostService<UserId, PostId> postService;
@@ -63,7 +65,7 @@ public class PostRestController<UserId, PostId> {
   }
 
     @GetMapping("/{postId}")
-  public ResponseEntity<SuccessResponse<PostDetailResponse>> findPost(@PathVariable PostId postId ,@AuthenticationPrincipal UserId userId) {
+  public ResponseEntity<SuccessResponse<PostDetailResponse>> findPost(@PathVariable PostId postId) {
     PostDetailResponse postDetailResponse = postService.findPostById(postId);
       return ResponseEntity.ok(
         SuccessResponse.<PostDetailResponse>builder().message("게시글 조회 성공").data(postDetailResponse).status(HttpStatus.OK.toString()).build());
