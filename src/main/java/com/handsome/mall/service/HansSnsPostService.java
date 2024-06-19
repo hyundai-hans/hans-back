@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class HansSnsPostService implements PostService<Long, Long> {
+public class HansSnsPostService implements PostService {
 
   private final PostImgRepository postImgRepository;
   private final ProductRepository productRepository;
@@ -150,7 +150,7 @@ public class HansSnsPostService implements PostService<Long, Long> {
 
     post.getPostTags().clear();
     post.getPostTags().addAll(updatedTagList);
-    
+
     post.setBody(updatePostDto.getBody());
     post.setTitle(updatePostDto.getTitle());
 

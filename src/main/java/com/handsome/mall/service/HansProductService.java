@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class HansProductService implements ProductService<Long> {
+public class HansProductService implements ProductService {
 
   private final ProductRepository productRepository;
   @Override

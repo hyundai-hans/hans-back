@@ -1,12 +1,11 @@
 package com.handsome.mall.service;
 
 import com.handsome.mall.dto.ProductSearchedDto;
-import com.handsome.mall.entity.primary.Product;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface ProductService<ID extends Object> {
+public interface ProductService {
   List<ProductSearchedDto> findProduct(String name);
 
 }

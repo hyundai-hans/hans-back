@@ -15,12 +15,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class HansPostLikeService implements PostLikeService<Long, Long> {
+public class HansPostLikeService implements PostLikeService {
 
-
+  private final MemberRepository memberRepository;
   private final PostRepository postRepository;
   private final PostLikeRepository postLikesRepository;
-  private MemberRepository memberRepository;
 
 
   @Override

@@ -7,9 +7,9 @@ import com.handsome.mall.dto.UserUpdateDto;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface UserService<ID extends Object> {
+public interface UserService {
   public void signUp(UserSignUpDto signUpDto);
-  public LoginSuccessResponse getUserProfile(ID id);
-  public void update(UserUpdateDto userUpdateDto, ID id);
-  UserInfoResponse getInfo(ID userId);
+  public LoginSuccessResponse getUserProfile(Long id);
+  public void update(UserUpdateDto userUpdateDto, Long id);
+  UserInfoResponse getInfo(Long userId);
 }

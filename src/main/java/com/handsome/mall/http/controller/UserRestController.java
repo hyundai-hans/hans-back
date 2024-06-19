@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping(value = "/users")
 @RestController
-public class UserRestController<ID> {
+public class UserRestController {
 
   private final TokenInvalidationStrategy strategy;
-  private final UserService<ID> userService;
+  private final UserService userService;
   private final UserDuplicationChecker duplicationChecker;
 
   @PostMapping("/email")
@@ -65,7 +65,7 @@ public class UserRestController<ID> {
   }
 
   @GetMapping("/profile")
-  public ResponseEntity<SuccessResponse<LoginSuccessResponse>> getUserProfile(@AuthenticationPrincipal ID id) {
+  public ResponseEntity<SuccessResponse<LoginSuccessResponse>> getUserProfile(@AuthenticationPrincipal Long id) {
     LoginSuccessResponse response = userService.getUserProfile(id);
     return ResponseEntity.ok(SuccessResponse.<LoginSuccessResponse>builder().data(response).message("프로필 이미지 전달 성공").status(HttpStatus.OK.toString()).build());
   }
@@ -81,7 +81,7 @@ public class UserRestController<ID> {
 
 
   @PutMapping
-  public ResponseEntity<SuccessResponse<Object>> update(@AuthenticationPrincipal ID userId,
+  public ResponseEntity<SuccessResponse<Object>> update(@AuthenticationPrincipal Long userId,
       @Valid @RequestBody UserUpdateDto userUpdateDto) {
     userService.update(userUpdateDto, userId);
    return ResponseEntity.ok(
@@ -89,7 +89,7 @@ public class UserRestController<ID> {
   }
 
   @GetMapping
-  public ResponseEntity<SuccessResponse<Object>> getUserInfo(@AuthenticationPrincipal ID userId) {
+  public ResponseEntity<SuccessResponse<Object>> getUserInfo(@AuthenticationPrincipal Long userId) {
 
     return ResponseEntity.ok(
         SuccessResponse.builder().status(HttpStatus.OK.toString()).message("유저 정보 반환")

@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class HansUserService implements UserService<Long> {
+public class HansUserService implements UserService {
 
   private final MemberRepository memberRepository;
   private final UserDuplicationChecker userDuplicationChecker;

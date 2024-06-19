@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/products")
 @RestController
-public class ProductRestController<PID> {
+public class ProductRestController {
 
-  private final ProductService<PID> productService;
+  private final ProductService productService;
 
   @GetMapping()
   public ResponseEntity<SuccessResponse<List<ProductSearchedDto>>> getProduct(@RequestParam("product_name") String productName){

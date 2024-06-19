@@ -31,10 +31,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/posts")
 @RestController
 @Slf4j
-public class PostRestController<UserId , PostId extends Long> {
+public class PostRestController {
 
-  private final PostLikeService<UserId, PostId> postLikeService;
-  private final PostService<UserId, PostId> postService;
+  private final PostLikeService postLikeService;
+  private final PostService postService;
 
 
   @GetMapping
@@ -58,14 +58,14 @@ public class PostRestController<UserId , PostId extends Long> {
 
   @PostMapping
   public ResponseEntity<SuccessResponse<Object>> createPost(
-      @Valid @RequestBody CreatePostDto createPostDto, @AuthenticationPrincipal UserId userId) {
+      @Valid @RequestBody CreatePostDto createPostDto, @AuthenticationPrincipal Long userId) {
     postService.createPost(userId, createPostDto);
     return ResponseEntity.ok(
         SuccessResponse.builder().message("게시글 작성 성공").status(HttpStatus.OK.toString()).build());
   }
 
     @GetMapping("/{postId}")
-  public ResponseEntity<SuccessResponse<PostDetailResponse>> findPost(@PathVariable PostId postId) {
+  public ResponseEntity<SuccessResponse<PostDetailResponse>> findPost(@PathVariable Long postId) {
     PostDetailResponse postDetailResponse = postService.findPostById(postId);
       return ResponseEntity.ok(
         SuccessResponse.<PostDetailResponse>builder().message("게시글 조회 성공").data(postDetailResponse).status(HttpStatus.OK.toString()).build());
@@ -74,7 +74,7 @@ public class PostRestController<UserId , PostId extends Long> {
 
   @PutMapping
   public ResponseEntity<SuccessResponse<Object>> updatePost(
-      @Valid @RequestBody UpdatePostDto updatePostDto, @AuthenticationPrincipal UserId userId) {
+      @Valid @RequestBody UpdatePostDto updatePostDto, @AuthenticationPrincipal Long userId) {
     postService.updatePost(userId, updatePostDto);
     return ResponseEntity.ok(
         SuccessResponse.builder().message("게시글 업데이트 성공").status(HttpStatus.OK.toString()).build());
@@ -82,15 +82,15 @@ public class PostRestController<UserId , PostId extends Long> {
 
 
   @DeleteMapping("/{postId}")
-  public ResponseEntity<SuccessResponse<Object>> deletePost(@PathVariable PostId postId,
-      @AuthenticationPrincipal UserId userId) {
+  public ResponseEntity<SuccessResponse<Object>> deletePost(@PathVariable Long postId,
+      @AuthenticationPrincipal Long userId) {
     postService.deletePost(userId, postId);
     return ResponseEntity.ok(
         SuccessResponse.builder().message("게시글 삭제 성공").status(HttpStatus.OK.toString()).build());
   }
   @PatchMapping("/{postId}")
-  public ResponseEntity<SuccessResponse<Object>> likePost(@PathVariable PostId postId,
-      @AuthenticationPrincipal UserId userId) {
+  public ResponseEntity<SuccessResponse<Object>> likePost(@PathVariable Long postId,
+      @AuthenticationPrincipal Long userId) {
     postLikeService.likesOrUnLikes(userId, postId);
     return ResponseEntity.ok(
         SuccessResponse.builder().message("게시글 좋아요 혹은 취소 성공").status(HttpStatus.OK.toString()).build());
