@@ -5,7 +5,7 @@ import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.entity.primary.PostImg;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -30,11 +30,10 @@ public interface PostImgMapper {
         return postImages;
     }
 
-
-
+    @Mapping(source = "imgDto.imgId",target = "id" )
      @Mapping(source = "imgDto.imgUrl", target = "imgUrl")
     @Mapping(source = "imgDto.isThumbnail", target = "isThumbnail", qualifiedByName = "toBoolean")
-    PostImg imgDtoToPostImg(ImgDto imgDto, PostImg postImg);
+    PostImg imgDtoToPostImg(ImgDto imgDto,Post post);
 
     @Named("toBoolean")
     default boolean toBoolean(Boolean value) {

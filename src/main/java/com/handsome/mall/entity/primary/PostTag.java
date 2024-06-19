@@ -26,7 +26,8 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @Builder
-public class PostTag extends BaseEntity {
+public class
+PostTag extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

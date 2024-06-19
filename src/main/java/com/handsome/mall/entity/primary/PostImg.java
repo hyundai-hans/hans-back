@@ -1,6 +1,7 @@
 package com.handsome.mall.entity.primary;
 
 import com.handsome.mall.entity.BaseEntity;
+import java.sql.Blob;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,6 +38,7 @@ public class PostImg extends BaseEntity {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @Lob
     @Column(name = "post_img_url", nullable = false)
     private String imgUrl;
 
