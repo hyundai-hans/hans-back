@@ -60,6 +60,15 @@ public class GlobalExceptionHandler {
     List<String> errors = Collections.singletonList(ex.getMessage());
     return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
   }
+
+    @ExceptionHandler(PostException.class)
+    public ResponseEntity<Map<String, List<String>>> postException(
+      PostException ex) {
+    List<String> errors = Collections.singletonList(ex.getMessage());
+    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+  }
+
+
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Map<String, List<String>>> methodArgumentException(
       ProductException ex) {

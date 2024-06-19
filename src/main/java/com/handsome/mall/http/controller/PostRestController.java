@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 @RestController
-public class PostRestController<UserId, PostId extends Long> {
+public class PostRestController<UserId, PostId> {
 
   private final PostLikeService<UserId, PostId> postLikeService;
   private final PostService<UserId, PostId> postService;
