@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
       @Query("SELECT DISTINCT p FROM Post p JOIN p.postTags pt " +
            "WHERE (:title IS NULL OR p.title LIKE %:title%) " +
-           "AND (:tagBody IS NULL OR pt.tagBody = :tagBody)")
+           "AND (:tagBody IS NULL OR pt.tagBody = %:tagBody%)")
     Page<Post> findByTitleContainingAndTagBody(@Param("title") String title, @Param("tagBody") String tagBody, Pageable pageable);
 
 }

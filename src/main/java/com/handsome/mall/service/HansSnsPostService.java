@@ -21,6 +21,7 @@ import com.handsome.mall.mapper.ProductMapper;
 import com.handsome.mall.mapper.TagMapper;
 import com.handsome.mall.repository.primary.MemberRepository;
 import com.handsome.mall.repository.primary.PostImgRepository;
+import com.handsome.mall.repository.primary.PostLikeRepository;
 import com.handsome.mall.repository.primary.PostRepository;
 import com.handsome.mall.repository.primary.ProductRepository;
 import java.util.List;
@@ -38,6 +39,7 @@ public class HansSnsPostService implements PostService {
   private final PostImgRepository postImgRepository;
   private final ProductRepository productRepository;
   private final PostRepository postRepository;
+  private final PostLikeRepository postLikeRepository;
   private final MemberRepository memberRepository;
 
   @Transactional("primaryTransactionManager")
@@ -108,7 +110,9 @@ public class HansSnsPostService implements PostService {
 
   @Transactional("primaryTransactionManager")
   @Override
-  public PostDetailResponse findPostById(Long postId ) {
+  public PostDetailResponse findPostById(Long userId, Long postId) {
+
+
 
     Post post = postRepository.findById(postId)
         .orElseThrow(() -> new PostException("존재하지 않는 상품입니다."));
@@ -121,10 +125,19 @@ public class HansSnsPostService implements PostService {
         .map(PostImgMapper.INSTANCE::postImgToImgDto)
         .collect(Collectors.toList());
 
+    Boolean isUserLikeThisPost = isLoginUserLikeThisPost(userId, post);
+
     ProductDto productDto = ProductMapper.INSTANCE.toProductDTO(post.getProduct());
 
     return PostMapper.INSTANCE.toPostDetailResponseDto(post, productDto, tagDtoList,
-        imgDtoList);
+        imgDtoList, isUserLikeThisPost);
+  }
+
+  private Boolean isLoginUserLikeThisPost(Long userId, Post post) {
+    if (userId != null && postLikeRepository.findByMemberIdAndPost(userId, post).isPresent()) {
+      return true;
+    }
+    return false;
   }
 
 

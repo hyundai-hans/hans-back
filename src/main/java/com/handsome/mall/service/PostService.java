@@ -14,5 +14,5 @@ public interface PostService {
   void deletePost(Long userId, Long postId);
   void updatePost(Long userId, UpdatePostDto updatePostDto);
   List<FindPostResponse> findPostByTitle(String title, String tagName, Pageable pageable);
-  PostDetailResponse findPostById(Long postId);
+  PostDetailResponse findPostById(Long userId, Long postId);
 }

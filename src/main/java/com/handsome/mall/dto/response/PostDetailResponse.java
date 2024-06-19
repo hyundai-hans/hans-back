@@ -20,6 +20,7 @@ public class PostDetailResponse {
     private String nickname;
     private String body;
     private Long likesCount;
+    private Boolean likeThisPost;
     private LocalDateTime createdAt;
     private List<TagDto> tagList;
     private List<ImgDto> imgList;

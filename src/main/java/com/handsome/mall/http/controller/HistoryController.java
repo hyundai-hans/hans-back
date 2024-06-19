@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/users/histories")
 @RestController
-public class HistoryController<UserId, PostId> {
+public class HistoryController {
 
   private final PostService postService;
-  private final HistoryService<UserId, PostId> historyService;
+  private final HistoryService historyService;
 
 
 }

@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/posts")
 @RestController
-@Slf4j
 public class PostRestController {
 
   private final PostLikeService postLikeService;
@@ -65,8 +64,8 @@ public class PostRestController {
   }
 
     @GetMapping("/{postId}")
-  public ResponseEntity<SuccessResponse<PostDetailResponse>> findPost(@PathVariable Long postId) {
-    PostDetailResponse postDetailResponse = postService.findPostById(postId);
+  public ResponseEntity<SuccessResponse<PostDetailResponse>> findDetailPost(@PathVariable Long postId, @AuthenticationPrincipal Long userId) {
+    PostDetailResponse postDetailResponse = postService.findPostById(userId,postId);
       return ResponseEntity.ok(
         SuccessResponse.<PostDetailResponse>builder().message("게시글 조회 성공").data(postDetailResponse).status(HttpStatus.OK.toString()).build());
   }

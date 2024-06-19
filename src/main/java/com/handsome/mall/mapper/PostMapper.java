@@ -76,13 +76,15 @@ public interface PostMapper {
     @Mapping(source = "tagDto.body", target = "tagBody")
     PostTag updateThroughTagDto(TagDto tagDto, PostTag postTag);
 
+    @Mapping(target = "likeThisPost", source ="likeThisPost")
     @Mapping(target = "likesCount", expression = "java(calculateLikesCount(post))")
     @Mapping(source = "post.member.nickname", target = "nickname")
     @Mapping(source = "post.member.profileImg", target = "profileImg")
     @Mapping(source = "tagDtoList", target = "tagList")
     @Mapping(source = "imgDtoList", target = "imgList")
     @Mapping(source = "productDto", target = "product")
-    PostDetailResponse toPostDetailResponseDto(Post post, ProductDto productDto, List<TagDto> tagDtoList, List<ImgDto> imgDtoList);
+    PostDetailResponse toPostDetailResponseDto(Post post, ProductDto productDto, List<TagDto> tagDtoList, List<ImgDto> imgDtoList,Boolean likeThisPost);
+
     default Long calculateLikesCount(Post post) {
         return post.getPostLikes().stream()
                 .filter(PostLike::getIsLiked)
