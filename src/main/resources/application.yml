@@ -18,3 +18,9 @@ logging:
     org.springframework.security: DEBUG
     org.springframework.security.web: DEBUG
     org.springframework.security.config: DEBUG
+
+
+cookie:
+  application:
+    domain: http://localhost:3000
+    age: 3000000

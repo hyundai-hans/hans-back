@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
+    List<Post> findByProductIdIn(List<Long> productIdList);
+
     Optional<Post> findById(Long productId);
 
       @Query("SELECT DISTINCT p FROM Post p JOIN p.postTags pt " +

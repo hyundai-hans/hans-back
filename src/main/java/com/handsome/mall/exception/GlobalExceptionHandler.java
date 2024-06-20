@@ -68,6 +68,13 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
   }
 
+    @ExceptionHandler(HistoryException.class)
+    public ResponseEntity<Map<String, List<String>>> historyException(
+      HistoryException ex) {
+    List<String> errors = Collections.singletonList(ex.getMessage());
+    return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+  }
+
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<Map<String, List<String>>> methodArgumentException(
