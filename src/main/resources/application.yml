@@ -24,3 +24,6 @@ cookie:
   application:
     domain: localhost
     age: 3000000
+
+server:
+  max-http-header-size: 65536
