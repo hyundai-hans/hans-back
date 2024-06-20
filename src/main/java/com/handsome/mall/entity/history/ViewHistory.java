@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Builder
@@ -24,10 +25,11 @@ public class ViewHistory extends BaseEntity {
     private ViewHistoryId id;
     
     @Column(name = "view_history_read_count", nullable = false)
+    @ColumnDefault("0")
     private Long readCount;
 
     @Lob
-    @Column(name = "view_history_thumbmnai_imag_url", nullable = false)
+    @Column(name = "view_history_thumbmnail_imag_url", nullable = false)
     private String thumbnailImagUrl;
 }
 

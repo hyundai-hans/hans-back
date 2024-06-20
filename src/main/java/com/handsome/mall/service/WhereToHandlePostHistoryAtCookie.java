@@ -8,6 +8,8 @@ import com.handsome.mall.mapper.HistoryMapper;
 import com.handsome.mall.repository.primary.PostRepository;
 import com.handsome.mall.util.CookieUtil;
 import com.handsome.mall.valueobject.HistoryType;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.Cookie;
@@ -36,8 +38,10 @@ public class WhereToHandlePostHistoryAtCookie implements
         .map(HistoryMapper.INSTANCE::toPostHistoryResponse)
         .collect(Collectors.toList());
 
+      String convertedToJson = getJsonString(result);
+    String encodedJson = URLEncoder.encode(convertedToJson, StandardCharsets.UTF_8);
     Cookie bannerCookie = CookieUtil.createCookie(HistoryType.BANNER.getValue(),
-        getJsonString(result), cookieAge, domain);
+        encodedJson, cookieAge, domain);
     httpServletResponse.addCookie(bannerCookie);
 
     return result;
@@ -46,8 +50,7 @@ public class WhereToHandlePostHistoryAtCookie implements
 
   private String getJsonString(List<PostHistoryResponse> result) throws JsonProcessingException {
     ObjectMapper objectMapper = new ObjectMapper();
-    String listAsJson = objectMapper.writeValueAsString(result);
-    return listAsJson;
+    return objectMapper.writeValueAsString(result);
 
   }
 }

@@ -6,6 +6,7 @@ import com.handsome.mall.entity.id.ViewHistoryId;
 import com.handsome.mall.mapper.HistoryMapper;
 import com.handsome.mall.repository.history.ViewHistoryRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +20,16 @@ public class PersistIntoDb implements WhereToHistoryPersistService {
     @Override
     public void persist(HistoryPostPersistDto dto) {
 
+        Long viewCounter = 0L;
         ViewHistoryId viewHistoryId = ViewHistoryId.builder().memberId(
-            dto.getMemberId()).productId(dto.getPostId()).build();
+            dto.getMemberId()).postId(dto.getPostId()).build();
 
-        ViewHistory viewHistory = HistoryMapper.INSTANCE.toEntity(dto,viewHistoryId);
+        Optional<ViewHistory> viewHistoryOptional= historyRepository.findById(viewHistoryId);
+
+        if(viewHistoryOptional.isPresent()){
+            viewCounter = viewHistoryOptional.get().getReadCount();
+        }
+        ViewHistory viewHistory = HistoryMapper.INSTANCE.toEntity(dto,viewCounter);
         historyRepository.save(viewHistory);
     }
 
