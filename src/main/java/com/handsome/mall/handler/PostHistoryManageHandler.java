@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class PostHistoryManageHandler {
     private final WhereToHandlePostHistoryService handleHistoryService;
     private final WhereToHistoryPersistService historyPersistService;
 
+    @Transactional("primaryTransactionManager")
     public List<PostHistoryResponse> handle(Long userId) throws JsonProcessingException {
         return handleHistoryService.handle(getProductListFromHistory(userId));
     }
@@ -28,7 +30,7 @@ public class PostHistoryManageHandler {
 
     private List<Long> getProductListFromHistory(Long userId) {
         List<ViewHistory> historyList = historyPersistService.get(userId);
-        return historyList.stream().map(history -> history.getId().getProductId())
+        return historyList.stream().map(history -> history.getId().getPostId())
             .collect(Collectors.toList());
     }
 }

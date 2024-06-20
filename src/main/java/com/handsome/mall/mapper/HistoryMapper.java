@@ -18,7 +18,9 @@ public interface HistoryMapper {
 
     HistoryMapper INSTANCE = Mappers.getMapper(HistoryMapper.class);
 
-    ViewHistory toEntity(HistoryPostPersistDto dto, ViewHistoryId id);
+    @Mapping(source = "dto.memberId", target = "id.memberId")
+    @Mapping(source = "dto.postId", target = "id.postId")
+    ViewHistory toEntity(HistoryPostPersistDto dto, Long readCount);
 
     HistoryPostPersistDto toDto(ViewHistory viewHistory);
 

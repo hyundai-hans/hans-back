@@ -19,8 +19,8 @@ public class ViewHistoryId implements Serializable {
     @Column(name = "member_id")
     private Long memberId;
 
-    @Column(name = "product_id")
-    private Long productId;
+    @Column(name = "post_id")
+    private Long postId;
 
     @Override
     public boolean equals(Object o) {
@@ -31,11 +31,11 @@ public class ViewHistoryId implements Serializable {
             return false;
         }
         ViewHistoryId that = (ViewHistoryId) o;
-        return memberId.equals(that.memberId) && productId.equals(that.productId);
+        return memberId.equals(that.memberId) && postId.equals(that.postId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(memberId, productId);
+        return Objects.hash(memberId, postId);
     }
 }
