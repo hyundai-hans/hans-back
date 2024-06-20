@@ -1,15 +1,11 @@
 package com.handsome.mall.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.handsome.mall.dto.response.PostHistoryResponse;
 import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.mapper.HistoryMapper;
 import com.handsome.mall.repository.primary.PostRepository;
 import com.handsome.mall.util.CookieUtil;
 import com.handsome.mall.valueobject.HistoryType;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.Cookie;
@@ -35,7 +31,7 @@ public class WhereToHandlePostHistoryAtCookie implements
     StringBuilder sb = new StringBuilder();
     for (String s : productIdList) {
       sb.append(s);
-      sb.append(",");
+      sb.append(":");
     }
     return sb.toString();
   }
