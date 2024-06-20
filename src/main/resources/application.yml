@@ -22,5 +22,9 @@ logging:
 
 cookie:
   application:
+<<<<<<< Updated upstream
     domain: localhost
+=======
+    domain: http://localhost:3000
+>>>>>>> Stashed changes
     age: 3000000

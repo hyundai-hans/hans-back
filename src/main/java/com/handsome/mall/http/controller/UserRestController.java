@@ -42,7 +42,7 @@ public class UserRestController {
   }
 
   @PostMapping("/nickname")
-  public ResponseEntity<SuccessResponse<Object>> nicknameDuplicatonChek(@RequestBody @Valid
+  public ResponseEntity<SuccessResponse<Object>> nicknameDuplicationChek(@RequestBody @Valid
       NicknameDto nicknameDto) {
     duplicationChecker.nickNameDuplicationChecker(nicknameDto.getNickname());
    return ResponseEntity.ok(
@@ -90,7 +90,6 @@ public class UserRestController {
 
   @GetMapping
   public ResponseEntity<SuccessResponse<Object>> getUserInfo(@AuthenticationPrincipal Long userId) {
-
     return ResponseEntity.ok(
         SuccessResponse.builder().status(HttpStatus.OK.toString()).message("유저 정보 반환")
             .data(userService.getInfo(userId)).build());

@@ -28,8 +28,8 @@ public interface PostMapper {
 
     @Mapping(source = "post.id", target = "postId")
     @Mapping(source = "post.title", target = "title")
-    @Mapping(source = "post.member.nickname", target = "nickName")
-    @Mapping(target = "thumbnailImgUrl", expression = "java(findThumbnailImgUrl(post))")
+    @Mapping(source = "post.member.nickname", target = "nickname")
+    @Mapping(target = "thumbNailImagUrl", expression = "java(findThumbnailImgUrl(post))")
     PostDto toPostDto(Post post);
 
 

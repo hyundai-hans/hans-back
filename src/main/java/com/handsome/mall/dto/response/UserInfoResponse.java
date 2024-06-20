@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 public class UserInfoResponse {
-
   private String profileImg;
   private String nickname;
   private String email;

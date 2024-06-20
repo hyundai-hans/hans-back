@@ -1,9 +1,15 @@
 package com.handsome.mall.mapper;
 
+<<<<<<< Updated upstream
 import com.handsome.mall.dto.HistoryPostPersistDto;
 import com.handsome.mall.dto.response.PostHistoryResponse;
 import com.handsome.mall.entity.history.ViewHistory;
 import com.handsome.mall.entity.id.ViewHistoryId;
+=======
+import com.handsome.mall.dto.HistoryPersistDto;
+import com.handsome.mall.dto.response.PostHistoryResponse;
+import com.handsome.mall.entity.history.ViewHistory;
+>>>>>>> Stashed changes
 import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.entity.primary.PostImg;
 import com.handsome.mall.exception.HistoryException;
@@ -18,11 +24,21 @@ public interface HistoryMapper {
 
     HistoryMapper INSTANCE = Mappers.getMapper(HistoryMapper.class);
 
+<<<<<<< Updated upstream
     @Mapping(source = "dto.memberId", target = "id.memberId")
     @Mapping(source = "dto.postId", target = "id.postId")
     ViewHistory toEntity(HistoryPostPersistDto dto, Long readCount);
 
     HistoryPostPersistDto toDto(ViewHistory viewHistory);
+=======
+    @Mapping(target = "id.memberId", source = "memberId")
+    @Mapping(target = "id.productId", source = "productId")
+    ViewHistory toEntity(HistoryPersistDto dto);
+
+    @Mapping(target = "memberId", source = "id.memberId")
+    @Mapping(target = "productId", source = "id.productId")
+    HistoryPersistDto toDto(ViewHistory viewHistory);
+>>>>>>> Stashed changes
 
 
     @Mapping(source = "id", target = "postId")
