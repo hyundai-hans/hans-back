@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @Builder
 public class LoginSuccessResponse {
-
   private String nickname;
   private String profileImg;
 }

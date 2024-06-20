@@ -27,9 +27,11 @@ public class PostHistoryManageHandler {
     public void persistHistory(HistoryPostPersistDto dto){
         historyPersistService.persist(dto);
     }
+
     private List<Long> getProductListFromHistory(Long userId) {
         List<ViewHistory> historyList = historyPersistService.get(userId);
-        return historyList.stream().map(history -> history.getId().getPostId()).collect(Collectors.toList());
+        return historyList.stream().map(history -> history.getId().getProductId())
+            .collect(Collectors.toList());
     }
 
 }
