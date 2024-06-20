@@ -19,10 +19,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at",nullable = false, updatable = false)
     @CreatedDate
     private LocalDateTime createdAt;
 
+    @Column(name = "modified_at")
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 }

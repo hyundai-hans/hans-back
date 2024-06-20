@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -45,7 +46,8 @@ public class Member extends BaseEntity {
     @Column(name = "member_password", length = 255, nullable = false)
     private String password;
 
-    @Column(name = "member_profile_img", nullable = false, length = 255)
+    @Lob
+    @Column(name = "member_profile_img", nullable = false)
     private String profileImg;
 
     @Enumerated(EnumType.STRING)

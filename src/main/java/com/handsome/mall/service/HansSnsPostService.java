@@ -1,5 +1,6 @@
 package com.handsome.mall.service;
 
+import com.handsome.mall.annotation.PersistHistory;
 import com.handsome.mall.dto.CreatePostDto;
 import com.handsome.mall.dto.FindPostResponse;
 import com.handsome.mall.dto.ImgDto;
@@ -108,11 +109,12 @@ public class HansSnsPostService implements PostService {
         );
     }
 
+
+
   @Transactional("primaryTransactionManager")
+  @PersistHistory
   @Override
   public PostDetailResponse findPostById(Long userId, Long postId) {
-
-
 
     Post post = postRepository.findById(postId)
         .orElseThrow(() -> new PostException("존재하지 않는 상품입니다."));
