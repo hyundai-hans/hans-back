@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class PostDto {
     private Long postId;
     private String title;
-    private String thumbNailImagUrl;
+    private String thumbNailImgUrl;
     private String nickName;
 }
