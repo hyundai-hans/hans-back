@@ -29,6 +29,8 @@ public class PersistHistoryAspect {
         Object[] args = joinPoint.getArgs();
         Long userId = (Long) args[0];
         Long postId = (Long) args[1];
+
+        if(userId!=null){
         String thumbnailImage = postDetail.getImgList().stream().filter(
             ImgDto::getIsThumbnail).findFirst().orElseThrow(() -> {
             throw new PostException("썸네일이 존재하지 않은 제품입니다.");
@@ -37,6 +39,7 @@ public class PersistHistoryAspect {
         postHistoryManageHandler.persistHistory(
             HistoryPostPersistDto.builder().memberId(userId).postId(postId)
                 .thumbnailImagUrl(thumbnailImage).build());
+    }
     }
 }
 
