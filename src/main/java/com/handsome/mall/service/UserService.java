@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface UserService {
-  public void signUp(UserSignUpDto signUpDto);
-  public LoginSuccessResponse getUserProfile(Long id);
-  public void update(UserUpdateDto userUpdateDto, Long id);
+  void signUp(UserSignUpDto signUpDto);
+  LoginSuccessResponse getUserProfile(Long id);
+  void update(UserUpdateDto userUpdateDto, Long id);
   UserInfoResponse getInfo(Long userId);
 }

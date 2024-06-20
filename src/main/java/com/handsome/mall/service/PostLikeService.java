@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface PostLikeService {
-  public void likesOrUnLikes(Long userId, Long postId);
+  void likesOrUnLikes(Long userId, Long postId);
 
 }

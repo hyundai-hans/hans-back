@@ -19,8 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-  private AuthenticationSuccessHandler successHandler;
-  private AuthenticationManager authenticationManager;
+  private final AuthenticationSuccessHandler successHandler;
+  private final AuthenticationManager authenticationManager;
 
   public UserAuthenticationFilter(
       AuthenticationSuccessHandler successHandler,

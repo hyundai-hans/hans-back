@@ -136,10 +136,7 @@ public class HansSnsPostService implements PostService {
   }
 
   private Boolean isLoginUserLikeThisPost(Long userId, Post post) {
-    if (userId != null && postLikeRepository.findByMemberIdAndPost(userId, post).isPresent()) {
-      return true;
-    }
-    return false;
+    return userId != null && postLikeRepository.findByMemberIdAndPost(userId, post).isPresent();
   }
 
 

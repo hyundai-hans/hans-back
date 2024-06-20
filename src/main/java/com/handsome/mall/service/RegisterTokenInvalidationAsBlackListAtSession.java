@@ -20,7 +20,6 @@ public class RegisterTokenInvalidationAsBlackListAtSession implements
   @Override
   public boolean isRegistered(String value) {
     Object key = httpSession.getAttribute(value);
-    if(key!=null) return true;
-    return false;
+    return key != null;
   }
 }
