@@ -13,6 +13,5 @@ public class PostHistoryResponse {
     private Long postId;
     private String title;
     private String nickname;
-
     private String thumbNailImgUrl;
 }

@@ -20,7 +20,7 @@ public class PostHistoryManageHandler {
     private final WhereToHistoryPersistService historyPersistService;
 
     @Transactional("primaryTransactionManager")
-    public List<PostHistoryResponse> handle(Long userId) throws JsonProcessingException {
+    public List<PostHistoryResponse> handle(Long userId)  {
         return handleHistoryService.handle(getProductListFromHistory(userId));
     }
 

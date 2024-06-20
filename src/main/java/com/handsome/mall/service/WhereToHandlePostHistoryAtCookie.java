@@ -30,25 +30,30 @@ public class WhereToHandlePostHistoryAtCookie implements
   @Value("${cookie.application.age}")
   private int cookieAge;
 
-  @Override
-  public List<PostHistoryResponse> handle(List<Long> productIdList) throws JsonProcessingException {
-    List<Post> posts = postRepository.findByIdIn(productIdList);
 
+  private String combineIntoIdString(List<String> productIdList) {
+    StringBuilder sb = new StringBuilder();
+    for (String s : productIdList) {
+      sb.append(s);
+      sb.append(",");
+    }
+    return sb.toString();
+  }
+
+
+  @Override
+  public List<PostHistoryResponse> handle(List<Long> productIdList)  {
+    List<Post> posts = postRepository.findByIdIn(productIdList);
+    List<String> idList = posts.stream().map(post -> String.valueOf(post.getId()))
+        .collect(Collectors.toList());
     List<PostHistoryResponse> result = posts.stream()
         .map(HistoryMapper.INSTANCE::toPostHistoryResponse)
         .collect(Collectors.toList());
 
-      String convertedToJson = getJsonString(result);
-    String encodedJson = URLEncoder.encode(convertedToJson, StandardCharsets.UTF_8);
     Cookie bannerCookie = CookieUtil.createCookie(HistoryType.BANNER.getValue(),
-        encodedJson, cookieAge, domain);
+        combineIntoIdString(idList), cookieAge, domain);
     httpServletResponse.addCookie(bannerCookie);
     return result;
   }
 
-  private String getJsonString(List<PostHistoryResponse> result) throws JsonProcessingException {
-    ObjectMapper objectMapper = new ObjectMapper();
-    return objectMapper.writeValueAsString(result);
-
-  }
 }
