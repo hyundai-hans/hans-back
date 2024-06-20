@@ -3,17 +3,14 @@ package com.handsome.mall.aop;
 import com.handsome.mall.dto.HistoryPostPersistDto;
 import com.handsome.mall.dto.ImgDto;
 import com.handsome.mall.dto.response.PostDetailResponse;
-import com.handsome.mall.entity.primary.PostImg;
 import com.handsome.mall.exception.PostException;
 import com.handsome.mall.handler.PostHistoryManageHandler;
-import java.util.Optional;
+import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-import lombok.RequiredArgsConstructor;
 
 @Aspect
 @Component
