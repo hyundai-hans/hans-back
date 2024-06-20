@@ -27,10 +27,10 @@ public interface HistoryMapper {
 
     @Mapping(source = "id", target = "postId")
     @Mapping(source = "member.nickname", target = "nickname")
-    @Mapping(source = "postImages", target = "thumbnailImgUrl", qualifiedByName = "mapThumbnailImageUrl")
+    @Mapping(source = "postImages", target = "thumbNailImgUrl", qualifiedByName = "mapThumbNailImageUrl")
     PostHistoryResponse toPostHistoryResponse(Post post);
 
-    @Named("mapThumbnailImageUrl")
+    @Named("mapThumbNailImageUrl")
     default String mapThumbnailImageUrl(List<PostImg> postImages) {
         return postImages.stream().filter(PostImg::getIsThumbnail).findFirst()
             .orElseThrow(() -> new HistoryException("히스토리에 존재하는 이미지가 썸네일이 존재하지 않습니다."))

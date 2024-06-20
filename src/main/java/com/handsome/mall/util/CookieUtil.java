@@ -21,7 +21,7 @@ public class CookieUtil {
         cookie.setPath("/");
         cookie.setDomain(domain);
         cookie.setSecure(false);
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(false);
         return cookie;
   }
 

@@ -43,9 +43,7 @@ public class WhereToHandlePostHistoryAtCookie implements
     Cookie bannerCookie = CookieUtil.createCookie(HistoryType.BANNER.getValue(),
         encodedJson, cookieAge, domain);
     httpServletResponse.addCookie(bannerCookie);
-
     return result;
-
   }
 
   private String getJsonString(List<PostHistoryResponse> result) throws JsonProcessingException {
