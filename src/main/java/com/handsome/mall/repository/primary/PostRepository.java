@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    List<Post> findByProductIdIn(List<Long> productIdList);
+    List<Post> findByIdIn(List<Long> postIdList);
 
     Optional<Post> findById(Long productId);
 

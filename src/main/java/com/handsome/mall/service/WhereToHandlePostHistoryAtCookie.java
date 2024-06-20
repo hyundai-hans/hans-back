@@ -32,7 +32,7 @@ public class WhereToHandlePostHistoryAtCookie implements
 
   @Override
   public List<PostHistoryResponse> handle(List<Long> productIdList) throws JsonProcessingException {
-    List<Post> posts = postRepository.findByProductIdIn(productIdList);
+    List<Post> posts = postRepository.findByIdIn(productIdList);
 
     List<PostHistoryResponse> result = posts.stream()
         .map(HistoryMapper.INSTANCE::toPostHistoryResponse)
