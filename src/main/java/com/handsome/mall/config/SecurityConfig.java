@@ -10,6 +10,7 @@ import com.handsome.mall.service.JwtTokenProcessor;
 import com.handsome.mall.service.RegisterTokenInvalidationAsBlackListAtSession;
 import com.handsome.mall.service.TokenInvalidationStrategy;
 import java.util.Collections;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -74,10 +75,10 @@ public class SecurityConfig {
         .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
           CorsConfiguration config = new CorsConfiguration();
           config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-          config.setAllowedMethods(Collections.singletonList("*"));
+          config.setAllowedMethods(List.of("OPTIONS"));
           config.setAllowCredentials(false);
-          config.setAllowedHeaders(Collections.singletonList("*"));
-          config.addExposedHeader("*");
+          config.setAllowedHeaders(Collections.singletonList("Authorization"));
+          config.addExposedHeader("Authorization");
           return config;
         }));
 
