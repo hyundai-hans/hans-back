@@ -75,7 +75,7 @@ public class SecurityConfig {
         .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
           CorsConfiguration config = new CorsConfiguration();
           config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-          config.setAllowedMethods(List.of("OPTIONS"));
+          config.setAllowedMethods(List.of("GET","POST","PATCH","OPTIONS","DELETE","PUT"));
           config.setAllowCredentials(false);
           config.setAllowedHeaders(Collections.singletonList("Authorization"));
           config.addExposedHeader("Authorization");
