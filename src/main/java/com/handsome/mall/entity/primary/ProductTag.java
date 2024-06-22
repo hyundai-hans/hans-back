@@ -28,13 +28,13 @@ import lombok.experimental.SuperBuilder;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tag_id")
+    @Column(name = "product_tag_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tag_product_id", nullable = false)
+    @JoinColumn(name = "product_tag_product_id", nullable = false)
     private Product product;
 
-    @Column(name = "tag_product_body", length = 50, nullable = false)
+    @Column(name = "product_tag_body", length = 50, nullable = false)
     private String tagBody;
 }

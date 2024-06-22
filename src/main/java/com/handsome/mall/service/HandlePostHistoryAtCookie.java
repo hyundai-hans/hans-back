@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class WhereToHandlePostHistoryAtCookie implements
+public class HandlePostHistoryAtCookie implements
     WhereToHandlePostHistoryService {
 
   private final PostRepository postRepository;
@@ -27,9 +27,9 @@ public class WhereToHandlePostHistoryAtCookie implements
   private int cookieAge;
 
 
-  private String combineIntoIdString(List<String> productIdList) {
+  private String combineIntoIdString(List<String> postIdList) {
     StringBuilder sb = new StringBuilder();
-    for (String s : productIdList) {
+    for (String s : postIdList) {
       sb.append(s);
       sb.append(":");
     }
@@ -38,8 +38,8 @@ public class WhereToHandlePostHistoryAtCookie implements
 
 
   @Override
-  public List<PostHistoryResponse> handle(List<Long> productIdList)  {
-    List<Post> posts = postRepository.findByIdIn(productIdList);
+  public List<PostHistoryResponse> handle(List<Long> postIdList)  {
+    List<Post> posts = postRepository.findByIdIn(postIdList);
     List<String> idList = posts.stream().map(post -> String.valueOf(post.getId()))
         .collect(Collectors.toList());
     List<PostHistoryResponse> result = posts.stream()
