@@ -77,7 +77,7 @@ public class SecurityConfig {
           config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
           config.setAllowedMethods(List.of("GET","POST","PATCH","OPTIONS","DELETE","PUT"));
           config.setAllowCredentials(false);
-          config.setAllowedHeaders(Collections.singletonList("Authorization"));
+          config.setAllowedHeaders(Collections.singletonList("*"));
           config.addExposedHeader("Authorization");
           return config;
         }));
