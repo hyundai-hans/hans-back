@@ -110,7 +110,6 @@ public class HansSnsPostService implements PostService {
     }
 
 
-
   @Transactional("primaryTransactionManager")
   @PersistHistory
   @Override

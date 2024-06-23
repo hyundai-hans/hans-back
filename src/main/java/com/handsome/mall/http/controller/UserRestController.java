@@ -5,13 +5,13 @@ import com.handsome.mall.dto.NicknameDto;
 import com.handsome.mall.dto.UserSignUpDto;
 import com.handsome.mall.dto.UserUpdateDto;
 import com.handsome.mall.dto.response.LoginSuccessResponse;
+import com.handsome.mall.handler.TokenHandler;
 import com.handsome.mall.http.message.SuccessResponse;
-import com.handsome.mall.service.TokenInvalidationStrategy;
 import com.handsome.mall.service.UserDuplicationChecker;
 import com.handsome.mall.service.UserService;
 import com.handsome.mall.valueobject.AuthRequestHeaderPrefix;
+import com.handsome.mall.valueobject.JwtType;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserRestController {
 
-  private final TokenInvalidationStrategy strategy;
+  private final TokenHandler tokenHandler;
   private final UserService userService;
   private final UserDuplicationChecker duplicationChecker;
 
@@ -74,7 +74,7 @@ public class UserRestController {
   public ResponseEntity<SuccessResponse<Object>> logout(HttpServletRequest request) {
     String token = request.getHeader(AuthRequestHeaderPrefix.AUTHORIZATION_HEADER)
         .substring(AuthRequestHeaderPrefix.TOKEN_PREFIX.length());
-    strategy.invalidate(token);
+    tokenHandler.invalidateToken(JwtType.access,token);
     return ResponseEntity.ok(
         SuccessResponse.builder().message("로그아웃 성공").status(HttpStatus.OK.toString()).build());
   }
