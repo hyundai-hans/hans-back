@@ -4,7 +4,7 @@ import com.handsome.mall.dto.HistoryPostPersistDto;
 import com.handsome.mall.dto.ImgDto;
 import com.handsome.mall.dto.response.PostDetailResponse;
 import com.handsome.mall.exception.PostException;
-import com.handsome.mall.handler.PostHistoryManageHandler;
+import com.handsome.mall.handler.PostHistoryManageCommandHandler;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PersistHistoryAspect {
 
-    private final PostHistoryManageHandler postHistoryManageHandler;
+    private final PostHistoryManageCommandHandler postHistoryManageCommandHandler;
 
     @Pointcut("@annotation(com.handsome.mall.annotation.PersistHistory)")
     public void persistHistoryMethods() {
@@ -36,7 +36,7 @@ public class PersistHistoryAspect {
             throw new PostException("썸네일이 존재하지 않은 제품입니다.");
         }).getImgUrl();
 
-        postHistoryManageHandler.persistHistory(
+        postHistoryManageCommandHandler.persistHistory(
             HistoryPostPersistDto.builder().memberId(userId).postId(postId)
                 .thumbnailImagUrl(thumbnailImage).build());
     }

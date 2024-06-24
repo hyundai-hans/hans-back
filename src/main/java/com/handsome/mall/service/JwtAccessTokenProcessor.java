@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 
 
 @AllArgsConstructor
-public class JwtTokenProcessor {
+public class JwtAccessTokenProcessor {
 
   public String accessKey;
   public long accessKeyLifeTime;
@@ -22,10 +22,8 @@ public class JwtTokenProcessor {
     throw new AuthException("존재하지 않는 JWT 토큰 타입입니다.");
   }
 
-
-  public void invalidateToken(JwtType type, String token) {
-    if(type.equals(JwtType.access)) tokenInvalidationStrategy.invalidate(token);
-    throw new AuthException("존재하지 않는 JWT 토큰 타입입니다.");
+  public void invalidateToken(String token) {
+    tokenInvalidationStrategy.invalidate(token);
   }
 
   private boolean validateAccessToken(String token) throws AuthException {
@@ -33,7 +31,6 @@ public class JwtTokenProcessor {
   }
 
   public String createAccessToken(String subject, Map<String, Object> claimsList) {
-
     if (claimsList == null) {
       return JwtUtil.generateToken(subject, accessKey, accessKeyLifeTime);
     }

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @RequiredArgsConstructor
-public class PostHistoryManageHandler {
+public class PostHistoryManageCommandHandler {
 
     private final WhereToHandlePostHistoryService handleHistoryService;
     private final WhereToHistoryPersistService historyPersistService;

@@ -2,6 +2,7 @@ package com.handsome.mall.handler;
 
 
 import com.handsome.mall.valueobject.AuthRequestHeaderPrefix;
+import com.handsome.mall.valueobject.JwtType;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -31,7 +32,7 @@ public class SystemAuthenticationSuccessHandler implements AuthenticationSuccess
   @Override
   public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
       Authentication authentication) {
-    String token = tokenHandler.createToken(authentication.getName(),null);
+    String token = tokenHandler.createToken(JwtType.access,authentication.getName(),null);
     response.setHeader(AuthRequestHeaderPrefix.AUTHORIZATION_HEADER,AuthRequestHeaderPrefix.TOKEN_PREFIX+token );
 
 

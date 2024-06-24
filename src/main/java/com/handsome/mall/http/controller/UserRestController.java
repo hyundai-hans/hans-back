@@ -80,6 +80,7 @@ public class UserRestController {
   }
 
 
+
   @PutMapping
   public ResponseEntity<SuccessResponse<Object>> update(@AuthenticationPrincipal Long userId,
       @Valid @RequestBody UserUpdateDto userUpdateDto) {

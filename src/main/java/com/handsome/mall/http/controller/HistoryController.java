@@ -3,7 +3,7 @@ package com.handsome.mall.http.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.handsome.mall.dto.response.PostHistoryResponse;
-import com.handsome.mall.handler.PostHistoryManageHandler;
+import com.handsome.mall.handler.PostHistoryManageCommandHandler;
 import com.handsome.mall.http.message.SuccessResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HistoryController {
 
-  private final PostHistoryManageHandler handler;
+  private final PostHistoryManageCommandHandler handler;
 
   @GetMapping("/products")
   public ResponseEntity<SuccessResponse<List<PostHistoryResponse>>> handleHistory(

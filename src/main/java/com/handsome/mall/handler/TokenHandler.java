@@ -1,6 +1,7 @@
 package com.handsome.mall.handler;
 
-import com.handsome.mall.service.JwtTokenProcessor;
+import com.handsome.mall.exception.AuthException;
+import com.handsome.mall.service.JwtAccessTokenProcessor;
 import com.handsome.mall.valueobject.JwtType;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -9,27 +10,35 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TokenHandler {
 
-  private JwtTokenProcessor jwtTokenProcessor;
+  private JwtAccessTokenProcessor jwtAccessTokenProcessor;
 
-
-  public String createToken(String id,
+  public String createToken(JwtType jwtType, String id,
       Map<String, Object> claimList) {
-    return jwtTokenProcessor.createAccessToken(id, claimList);
-
-  }
-  public void invalidateToken(JwtType type, String value){
-     jwtTokenProcessor.invalidateToken(type, value);
-  }
-
-  public boolean isValidToken(JwtType type, String value){
-    return jwtTokenProcessor.isValidToken(type, value);
+    if (jwtType.equals(JwtType.access)) {
+      return jwtAccessTokenProcessor.createAccessToken(id, claimList);
+    }
+    throw new AuthException("존재하지 않은 토큰 타입입니다.");
   }
 
-  public String getUserId(JwtType type, String value){
-    return jwtTokenProcessor.getSubject(type,value);
-
+  public void invalidateToken(JwtType jwtType, String value) {
+    if (jwtType.equals(JwtType.access)) {
+      jwtAccessTokenProcessor.invalidateToken(value);
+    }
+    throw new AuthException("존재하지 않은 토큰 타입입니다.");
   }
 
+  public boolean isValidToken(JwtType jwtType, String value) {
+    if (jwtType.equals(JwtType.access)) {
+      return jwtAccessTokenProcessor.isValidToken(jwtType, value);
+    }
+    throw new AuthException("존재하지 않은 토큰 타입입니다.");
+  }
 
+  public String getUserId(JwtType jwtType, String value) {
+    if (jwtType.equals(JwtType.access)) {
+      return jwtAccessTokenProcessor.getSubject(jwtType, value);
+    }
+    throw new AuthException("존재하지 않은 토큰 타입입니다.");
+  }
 
 }
