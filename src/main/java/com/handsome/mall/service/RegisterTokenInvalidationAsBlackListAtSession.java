@@ -1,13 +1,12 @@
 package com.handsome.mall.service;
 
-import com.handsome.mall.valueobject.JwtType;
 import javax.servlet.http.HttpSession;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 
-@AllArgsConstructor
 @RequiredArgsConstructor
+@Service
 public class RegisterTokenInvalidationAsBlackListAtSession implements
     TokenInvalidationStrategy {
 

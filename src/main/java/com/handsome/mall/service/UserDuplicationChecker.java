@@ -1,14 +1,14 @@
 package com.handsome.mall.service;
 
-import com.handsome.mall.entity.primary.Member;
 import com.handsome.mall.exception.UserException;
 import com.handsome.mall.repository.primary.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
-
+/**
+ * This is the helper class for handling the user duplication check
+ */
 @RequiredArgsConstructor
 @Service
 public class UserDuplicationChecker {

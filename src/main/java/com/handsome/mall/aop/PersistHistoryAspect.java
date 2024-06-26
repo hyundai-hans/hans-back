@@ -12,6 +12,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
+/**
+ * This is the class which is for persisting the data into historyDB by using Spring AOP
+ */
+
 @Aspect
 @Component
 @RequiredArgsConstructor
@@ -23,6 +27,12 @@ public class PersistHistoryAspect {
     public void persistHistoryMethods() {
     }
 
+    /**
+     * *
+      * @param joinPoint
+     * @param postDetail when the user see the postDetail, persist into historyDB the user history
+     *                   which is recently read
+     */
     @AfterReturning(pointcut = "persistHistoryMethods()", returning = "postDetail")
     public void afterReturningAdvice(JoinPoint joinPoint, PostDetailResponse postDetail) {
 

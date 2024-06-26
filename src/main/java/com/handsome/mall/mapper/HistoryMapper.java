@@ -3,7 +3,6 @@ package com.handsome.mall.mapper;
 import com.handsome.mall.dto.HistoryPostPersistDto;
 import com.handsome.mall.dto.response.PostHistoryResponse;
 import com.handsome.mall.entity.history.ViewHistory;
-import com.handsome.mall.entity.id.ViewHistoryId;
 import com.handsome.mall.entity.primary.Post;
 import com.handsome.mall.entity.primary.PostImg;
 import com.handsome.mall.exception.HistoryException;

@@ -5,7 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * This is the Util class for returning the HttpServletResponse with json type
+ */
 public class JsonBinderUtil {
+
+  private JsonBinderUtil(){
+
+
+  }
 
   public static void setResponseWithJson(HttpServletResponse response, int status,
       Object type) throws IOException {

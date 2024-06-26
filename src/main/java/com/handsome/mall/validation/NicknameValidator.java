@@ -4,6 +4,10 @@ import com.handsome.mall.annotation.NickName;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * This is the ConstraintValidator which is bound with NickName annotation
+ * @see NickName
+ */
 public class NicknameValidator implements ConstraintValidator<NickName, String> {
 
     private static final String NICKNAME_PATTERN = "^.{1,}$";

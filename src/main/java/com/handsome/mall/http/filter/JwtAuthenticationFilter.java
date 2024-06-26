@@ -18,6 +18,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/**
+ * This is the JwtAuthenticationFilter, which can be used when there is token at header or not
+ * For managing the authorization in one place this filter isn't set shouldNotFilter
+ * @see com.handsome.mall.config.SecurityConfig
+ * When user is authenticated set the user is authenticated
+ * @see JwtAuthenticationFilter#setSecurityContext(String)
+ */
 @AllArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 

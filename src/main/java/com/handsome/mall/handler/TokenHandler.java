@@ -7,6 +7,12 @@ import java.util.Map;
 import lombok.AllArgsConstructor;
 
 
+/**
+ * This is the TokenHandler which is adapted the Facade pattern. when Token type is created
+ * There should be another TokenProcessor
+ * @see JwtType
+ */
+
 @AllArgsConstructor
 public class TokenHandler {
 

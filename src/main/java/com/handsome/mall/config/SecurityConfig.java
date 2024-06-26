@@ -66,7 +66,7 @@ public class SecurityConfig {
 
 
   @Bean
-  public SecurityFilterChain storeSecurityFilterChain(HttpSecurity http) throws Exception {
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
     http
         .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {

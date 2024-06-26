@@ -12,6 +12,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+
+/**
+ * This is the Handler which the controller directly use.
+ * There are  strategy interfaces, which one is handling whereToPersist, another one is whereToHandle
+ * @see  WhereToHandlePostHistoryService
+ * @see WhereToHistoryPersistService
+ */
 @Component
 @RequiredArgsConstructor
 public class PostHistoryManageCommandHandler {
