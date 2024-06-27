@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * This annotation is the marker annotation for putting the data into historyDB
- * @see com.handsome.mall.aop.PersistHistoryAspect It can be used with proxy
+ * This annotation is the marker annotation for The annotated with this annotation will put the data into HistoryDB
+ * @see com.handsome.mall.aop.PersistHistoryAspect This marker annotation is used with aop proxy
  *
  */
 @Target(ElementType.METHOD)
