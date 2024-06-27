@@ -13,5 +13,4 @@ public class SuccessResponse<T> {
     private String status;
     private String message;
     private T data;
-
 }

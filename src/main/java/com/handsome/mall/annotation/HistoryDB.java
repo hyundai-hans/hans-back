@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
-* This annotation is marker annotation for letting know The annotated with this annotation will be used with HistoryDB in this application 
+* This annotation is marker annotation for letting know The annotated with this annotation will be used with HistoryDB in this application */
 */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
