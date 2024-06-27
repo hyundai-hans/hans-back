@@ -1,0 +1,25 @@
+spring:
+
+  datasource:
+    primary:
+      jdbc-url: ${DATABASE_PRIMARY_URL}
+      username: ${DATABASE_PRIMARY_USERNAME}
+      password: ${DATABASE_PRIMARY_PASSWORD}
+      driver-class-name: ${DATABASE_PRIMARY_DRIVER}
+
+    history:
+      jdbc-url: ${DATABASE_HISTORY_URL}
+      username: ${DATABASE_HISTORY_USERNAME}
+      password: ${DATABASE_PRIMARY_PASSWORD}
+      driver-class-name: ${DATABASE_PRIMARY_DRIVER}
+
+  logging:
+    level:
+      org.hibernate.eSQL: DEBUG
+      org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+hibernate:
+  history:
+    ddl-auto: update
+  primary:
+    ddl-auto: create

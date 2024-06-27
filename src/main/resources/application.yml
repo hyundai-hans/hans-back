@@ -20,10 +20,13 @@ logging:
     org.springframework.security.config: DEBUG
 
 
+
+application:
+  domain: ${DOMAIN}
+
 cookie:
-  application:
-    domain: localhost
-    age: 3000000
+  domain: ${DOMAIN}
+  age: ${COOKIE_AGE}
 
 server:
   max-http-header-size: 65536
