@@ -72,9 +72,17 @@ public class SecurityConfig {
         .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
           CorsConfiguration config = new CorsConfiguration();
           config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-          config.setAllowedMethods(List.of("GET","POST","PATCH","OPTIONS","DELETE","PUT"));
+          config.setAllowedMethods(List.of("GET", "POST", "PATCH", "OPTIONS", "DELETE", "PUT"));
           config.setAllowCredentials(false);
-          config.setAllowedHeaders(Collections.singletonList("*"));
+          config.setAllowedHeaders(List.of(
+              "Host",
+              "User-Agent",
+              "Accept",
+              "Accept-Language",
+              "Accept-Encoding",
+              "Connection",
+              "Origin"
+          ));
           config.addExposedHeader("Authorization");
           return config;
         }));
