@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 
 /**
 * This annotation is marker annotation for letting know The annotated with this annotation will be used with PrimaryDB in this application */
+ */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PrimaryDB {
