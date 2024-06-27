@@ -87,8 +87,9 @@ public class SecurityConfig {
           return config;
         }));
 
-    http.csrf().disable().formLogin().disable().
-        sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    http.csrf().disable().formLogin().disable().logout().disable();
+
+    http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     http.authorizeRequests().
         antMatchers(HttpMethod.POST, "/**/login").permitAll().
