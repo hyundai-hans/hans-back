@@ -103,7 +103,6 @@ public class SecurityConfig {
         antMatchers(HttpMethod.GET, "/posts/*").permitAll().
         antMatchers(HttpMethod.GET, "/products/*").permitAll().
         antMatchers(HttpMethod.GET, "/tags/*").permitAll().
-        antMatchers(HttpMethod.OPTIONS,"/**").permitAll().
 
 
         anyRequest().authenticated();
