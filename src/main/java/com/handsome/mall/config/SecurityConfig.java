@@ -35,6 +35,8 @@ public class SecurityConfig {
 
 
   private final HttpSession httpSession;
+  @Value("${application.domain}")
+  public String domain;
   @Value("${encrypt.key.life-time}")
   public long accessKeyLifeTime;
   private final MemberRepository memberRepository;
@@ -71,7 +73,7 @@ public class SecurityConfig {
     http
         .cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
           CorsConfiguration config = new CorsConfiguration();
-          config.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+          config.setAllowedOrigins(Collections.singletonList(domain));
           config.setAllowedMethods(List.of("GET", "POST", "PATCH", "OPTIONS", "DELETE", "PUT"));
           config.setAllowCredentials(false);
           config.setAllowedHeaders(List.of(
