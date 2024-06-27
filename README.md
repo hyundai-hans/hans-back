@@ -6,10 +6,9 @@
 ## Description
 ![image](https://github.com/hyundai-hans/hans-back/assets/60885635/c051643a-24dc-42e5-aaf1-746e61faeb6c)
 
-
 This project promotes the sales of hansome-shopping-mall(https://www.thehandsome.com)
 There are the posts whose buy the clothes from the handsome-shopping-mall can post the their clothes which is from the handsome-shopping-mall only authenticated user can post the posts otherwise anyone can see the posts above all There are the banner posts which user see recently, for non-member would see banner posts which is the most liked post at banner
----------
+
 
 
 
