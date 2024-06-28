@@ -50,7 +50,6 @@ public class SecurityConfig {
   }
 
 
-
   @Bean
   public TokenInvalidationStrategy tokenInvalidationStrategy() {
     return new RegisterTokenInvalidationAsBlackListAtSession(httpSession);
@@ -103,12 +102,9 @@ public class SecurityConfig {
         antMatchers(HttpMethod.GET, "/posts/*").permitAll().
         antMatchers(HttpMethod.GET, "/products/*").permitAll().
         antMatchers(HttpMethod.GET, "/tags/*").permitAll().
-        antMatchers(HttpMethod.OPTIONS,"/**").permitAll().
 
 
         anyRequest().authenticated();
-
-    http.logout().disable();
 
     http
         .addFilterBefore(userAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
