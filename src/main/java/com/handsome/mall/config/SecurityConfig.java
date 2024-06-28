@@ -50,7 +50,6 @@ public class SecurityConfig {
   }
 
 
-
   @Bean
   public TokenInvalidationStrategy tokenInvalidationStrategy() {
     return new RegisterTokenInvalidationAsBlackListAtSession(httpSession);
@@ -106,8 +105,6 @@ public class SecurityConfig {
 
 
         anyRequest().authenticated();
-
-    http.logout().disable();
 
     http
         .addFilterBefore(userAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)

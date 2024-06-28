@@ -14,7 +14,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
-@Component
 public class SystemAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
   private final TokenHandler tokenHandler;
