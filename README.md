@@ -55,7 +55,7 @@ https://www.notion.so/API-c0610cde3b5a4f9ead9fd21c4d8c0e4e?pvs=4
         <td align="center"><img alt="avatar" src="https://github.com/yangjaehyuk.png" width="100"></td>
     </tr>
     <tr>
-        <td align="center"><a href="https://github.com/JIUNG GU">구지웅</a></td>
+        <td align="center"><a href="https://github.com/JIUNG9">구지웅</a></td>
         <td align="center"><a href="https://github.com/yangjaehyuk">양재혁</a></td>
     </tr>
  </table>
